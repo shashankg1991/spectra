@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories("com.spectra.jewel.repository")
 @EntityScan("com.spectra.jewel.model")
-@ComponentScan(basePackages = "com.spectra.jewel.controller")
+@ComponentScan(basePackages = "com.spectra.jewel")
 @EnableAutoConfiguration
 public class JewelApplication {
 
