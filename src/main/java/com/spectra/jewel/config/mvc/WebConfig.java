@@ -1,4 +1,4 @@
-package com.spectra.jewel.config;
+package com.spectra.jewel.config.mvc;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public UrlBasedViewResolver viewResolver() {
+		//We set the path for the jsp pages
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
 		resolver.setPrefix("/WEB-INF/pages/");
 		resolver.setSuffix(".jsp");
@@ -22,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//Define the location from where static content can be served
 		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/WEB-INF/resources/");
 	}
 

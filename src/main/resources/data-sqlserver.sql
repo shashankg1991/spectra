@@ -1,0 +1,1 @@
+INSERT into USERS (USERNAME,PASSWORD,ENABLED) VALUES('user','password',1);

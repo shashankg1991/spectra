@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.spectra.jewel.repository")
 @EntityScan("com.spectra.jewel.model")
 @ComponentScan(basePackages = "com.spectra.jewel")
-@EnableAutoConfiguration
+@EnableAutoConfiguration // Automatically configures the beans necessary for boilerplate spring
+							// dependencies
 public class JewelApplication {
 
 	public static void main(String[] args) {
