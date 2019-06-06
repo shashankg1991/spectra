@@ -42,7 +42,7 @@ public class UserController {
 			errorMessge = "You have been successfully logged out !!";
 		}
 		model.addAttribute("errorMessge", errorMessge);
-		return "login";
+		return "user/login";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -58,7 +58,7 @@ public class UserController {
 	public String newRegistration(ModelMap model) {
 		User user = new User();
 		model.addAttribute("user", user);
-		return "register";
+		return "user/register";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -66,7 +66,7 @@ public class UserController {
 
 		if (result.hasErrors()) {
 			System.out.println("There are errors");
-			return "register";
+			return "user/register";
 		}
 		userService.save(user);
 

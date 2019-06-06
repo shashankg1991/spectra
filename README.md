@@ -17,3 +17,9 @@ DB Initialization:
 	
 Spring Security Config:
 	-http://websystique.com/spring-security/spring-security-4-password-encoder-bcrypt-example-with-hibernate/
+	
+JSP Handling:
+	-https://stackoverflow.com/questions/1296235/jsp-tricks-to-make-templating-easier#comment-1127458
+
+Site Template:
+	-https://w3layouts.com/womens-fashion-e-commerce-category-flat-bootstrap-responsive-web-template/
