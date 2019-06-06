@@ -1,5 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
+<head>
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<script src="/resources/js/jquery-3.4.1.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<meta charset="ISO-8859-1">
+<title>Spectra - Login</title>
+</head>
 <body onload='document.loginForm.username.focus();'>
     <h1>Spring Security 5 - Login Form</h1>
  

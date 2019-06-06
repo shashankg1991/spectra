@@ -7,7 +7,7 @@
 <script src="/resources/js/jquery-3.4.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Spectra - Home</title>
 </head>
 <body>
 	<!-- Navigation -->

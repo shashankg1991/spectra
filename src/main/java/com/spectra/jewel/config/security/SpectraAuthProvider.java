@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.spectra.jewel.service.DefaultUserDetailsService;
+import com.spectra.jewel.service.impl.DefaultUserDetailsService;
 
 public class SpectraAuthProvider extends DaoAuthenticationProvider {
 	@Autowired

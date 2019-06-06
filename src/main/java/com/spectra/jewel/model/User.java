@@ -2,6 +2,7 @@ package com.spectra.jewel.model;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String firstName;
@@ -26,6 +27,7 @@ public class User {
 
 	private String email;
 
+	@Column(unique = true)
 	private String username;
 
 	private String password;
@@ -38,7 +40,7 @@ public class User {
 
 	public User() {
 		super();
-		this.enabled = false;
+		this.enabled = true;
 	}
 
 	public Long getId() {
