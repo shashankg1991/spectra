@@ -2,7 +2,8 @@ To run the project in Eclipse:
 	-Right click on the JewelApplication.java file.
 	-Run as java application
 	-The application will run on tomcat server on port 9090 (Configured in applicaton.properties)
-	- Decomplier : https://stackoverflow.com/questions/48396661/eclipse-enhanced-class-decompiler-plugin-does-not-decompile-when-debugging
+	-Decomplier : https://stackoverflow.com/questions/48396661/eclipse-enhanced-class-decompiler-plugin-does-not-decompile-when-debugging
+	-Package heiraichal structure : https://bugs.eclipse.org/bugs/show_bug.cgi?id=500823
 	
 To run in intellij:
 	-After build.
