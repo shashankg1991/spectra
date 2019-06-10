@@ -51,6 +51,7 @@ public class BatchJobsConfig {
 		flatFileItemReader.setName("Product-Reader");
 		flatFileItemReader.setLinesToSkip(1);
 		flatFileItemReader.setLineMapper(productLineMapper());
+		flatFileItemReader.setStrict(false);
 		return flatFileItemReader;
 	}
 

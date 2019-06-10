@@ -3,9 +3,7 @@ package com.spectra.jewel.service.impl;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.solr.core.query.result.FacetEntry;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Service;
 

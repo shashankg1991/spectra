@@ -10,7 +10,6 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
@@ -33,13 +32,15 @@ public class FileArchivingTasklet implements Tasklet, InitializingBean {
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		Resource fileResource = new FileSystemResource(filePath);
-		File file = fileResource.getFile();
-		archiveFile(file);
-		boolean deleted = file.delete();
-		if (!deleted) {
-			throw new UnexpectedJobExecutionException("Could not delete file " + file.getPath());
-		} else {
-			System.out.println(file.getPath() + " is deleted!");
+		if (fileResource.exists()) {
+			File file = fileResource.getFile();
+			archiveFile(file);
+			boolean deleted = file.delete();
+			if (!deleted) {
+				throw new UnexpectedJobExecutionException("Could not delete file " + file.getPath());
+			} else {
+				System.out.println(file.getPath() + " is deleted!");
+			}
 		}
 		return RepeatStatus.FINISHED;
 	}
