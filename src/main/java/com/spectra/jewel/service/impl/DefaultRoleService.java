@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.spectra.jewel.model.Role;
 import com.spectra.jewel.repository.RoleRepository;
+import com.spectra.jewel.service.RoleService;
 
 @Service(value = "roleService")
-public class RoleServiceImpl implements RoleService {
+public class DefaultRoleService implements RoleService {
 	@Resource
 	RoleRepository roleRepository;
 

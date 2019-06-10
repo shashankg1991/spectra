@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.spectra.jewel.exception.DuplicateException;
 import com.spectra.jewel.model.User;
 import com.spectra.jewel.repository.UserRepository;
 import com.spectra.jewel.service.UserService;
@@ -21,7 +22,10 @@ public class DefaultUserService implements UserService {
 	PasswordEncoder passwordEncoder;
 
 	@Override
-	public void save(User user) {
+	public void register(User user) throws DuplicateException {
+		if (null != findByUserName(user.getUsername())) {
+			throw new DuplicateException("User with given username already exists.");
+		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 

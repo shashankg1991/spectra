@@ -26,6 +26,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.httpBasic();
@@ -34,9 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.authorizeRequests().antMatchers("/logout").permitAll();
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
-		http.authorizeRequests().antMatchers("/product/**").hasRole("USER");
 		http.authorizeRequests().antMatchers("/").permitAll();
-		http.authorizeRequests().antMatchers("/**").hasAnyRole("ADMIN", "USER");
+		http.authorizeRequests().antMatchers("/**").permitAll();
 		http.authorizeRequests().and().formLogin().loginPage("/login").loginProcessingUrl("/login")
 				.failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
 				.defaultSuccessUrl("/");

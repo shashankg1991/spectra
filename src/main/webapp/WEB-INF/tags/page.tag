@@ -12,7 +12,9 @@
 </head>
 <body>
 	<t:header />
-	<jsp:doBody />
+	<div class="bodyContainer">
+		<jsp:doBody />
+	</div>
 	<t:footer />
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spectra.jewel.model.Product;
 import com.spectra.jewel.repository.ProductRepository;
+import com.spectra.jewel.service.SolrProductService;
 
 @Controller
 @RequestMapping("/product/list")
@@ -16,12 +17,28 @@ public class ProductListController {
 	@Resource
 	ProductRepository productRepository;
 
+	@Resource
+	SolrProductService solrProductService;
+
 	@GetMapping
-    public String list(Model model) {
+	public String list(Model model) {
+
+		createDummyProductAndAddToIndex(1l);
+		createDummyProductAndAddToIndex(2l);
+		createDummyProductAndAddToIndex(3l);
+		createDummyProductAndAddToIndex(4l);
+		createDummyProductAndAddToIndex(5l);
+		createDummyProductAndAddToIndex(6l);
+		productRepository.findAll().forEach(product -> solrProductService.addToIndex(product));
+		model.addAttribute("searchPageResult", solrProductService.getAllProducts());
+
+		return "/product/productlist";
+	}
+
+	private void createDummyProductAndAddToIndex(Long id) {
 		Product product = new Product();
-		product.setName("Product 1");
+		product.setName("Name " + id);
+		product.setDescription("Desc " + id);
 		productRepository.save(product);
-		model.addAttribute("products", productRepository.findAll());
-        return "/product/productlist";
-    }
+	}
 }

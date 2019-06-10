@@ -17,17 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.spectra.jewel.exception.DuplicateException;
+import com.spectra.jewel.forms.UserRegistrationForm;
 import com.spectra.jewel.model.Role;
 import com.spectra.jewel.model.User;
+import com.spectra.jewel.service.RoleService;
 import com.spectra.jewel.service.UserService;
-import com.spectra.jewel.service.impl.RoleService;
 
 @Controller
 public class UserController {
 
 	@Resource
 	UserService userService;
-	
+
 	@Resource
 	RoleService roleService;
 
@@ -36,7 +38,7 @@ public class UserController {
 			@RequestParam(value = "logout", required = false) String logout, Model model) {
 		String errorMessge = null;
 		if (error != null) {
-			errorMessge = "Username or Password is incorrect !!";
+			errorMessge = "Username or Password is invalid !!";
 		}
 		if (logout != null) {
 			errorMessge = "You have been successfully logged out !!";
@@ -56,39 +58,37 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String newRegistration(ModelMap model) {
-		User user = new User();
-		model.addAttribute("user", user);
+		UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
+		model.addAttribute("userRegistrationForm", userRegistrationForm);
 		return "user/register";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String saveRegistration(@Valid User user, BindingResult result, ModelMap model) {
-
+	public String saveRegistration(@ModelAttribute @Valid UserRegistrationForm userRegistrationForm,
+			BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			System.out.println("There are errors");
 			return "user/register";
 		}
-		userService.save(user);
 
-		System.out.println("First Name : " + user.getFirstName());
-		System.out.println("Last Name : " + user.getLastName());
-		System.out.println("SSO ID : " + user.getUsername());
-		System.out.println("Password : " + user.getPassword());
-		System.out.println("Email : " + user.getEmail());
-		System.out.println("Checking UsrProfiles....");
-		if (user.getRoles() != null) {
-			for (Role role : user.getRoles()) {
-				System.out.println("Profile : " + role.getName());
-			}
+		// TODO: Create converter and populator
+		User user = new User();
+		user.setEmail(userRegistrationForm.getEmail());
+		user.setFirstName(userRegistrationForm.getFirstName());
+		user.setLastName(userRegistrationForm.getLastName());
+		user.setPassword(userRegistrationForm.getPassword());
+		try {
+			userService.register(user);
+		} catch (DuplicateException de) {
+			model.addAttribute("errorMessge", de.getMessage());
+			return "user/register";
 		}
-
-		model.addAttribute("success", "User " + user.getFirstName() + " has been registered successfully");
 		return "homepage";
 	}
-	
-	 @ModelAttribute("roles")
-	    public Iterable<Role> initializeProfiles() {
-	        return roleService.findAll();
-	    }
+
+	@ModelAttribute("roles")
+	public Iterable<Role> initializeProfiles() {
+		return roleService.findAll();
+	}
 
 }

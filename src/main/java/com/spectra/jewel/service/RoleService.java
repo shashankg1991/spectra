@@ -1,4 +1,4 @@
-package com.spectra.jewel.service.impl;
+package com.spectra.jewel.service;
 
 import com.spectra.jewel.model.Role;
 
