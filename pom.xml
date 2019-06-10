@@ -138,11 +138,17 @@
 		</dependency>
 		<!-- Spring SOLR dependencies -->
 		<!-- Spring batch dependencies -->
-		 <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-batch</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
 		<!-- Spring batch dependencies -->
+		<!-- Spring session dependencies -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-jdbc</artifactId>
+		</dependency>
+		<!-- Spring session dependencies -->
 	</dependencies>
 
 	<build>

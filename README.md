@@ -47,3 +47,8 @@ Spring SOLR
 	
 Spring Batch
 	-https://www.youtube.com/watch?v=1XEX-u12i0A&t=2138s
+	
+Spring Session
+	-https://www.javadevjournal.com/spring/spring-session-with-jdbc/ : Don’t use @EnableJdbcHttpSession and let Spring Boot handle it through auto configuration.
+	-https://www.baeldung.com/spring-session-jdbc
+	-https://dzone.com/articles/spring-jdbc-session
