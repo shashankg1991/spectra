@@ -1,10 +1,15 @@
 package com.spectra.jewel.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Table(name = "products")
@@ -18,6 +23,8 @@ public class Product {
 	private String name;
 	@Column(name = "description", nullable = true)
 	private String description;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private List<Stone> stones = new ArrayList<Stone>();
 
 	public long getId() {
 		return id;
@@ -41,6 +48,14 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Stone> getStones() {
+		return stones;
+	}
+
+	public void setStones(List<Stone> stones) {
+		this.stones = stones;
 	}
 
 }
