@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.spectra.jewel.exception.DuplicateException;
-import com.spectra.jewel.model.User;
+import com.spectra.jewel.model.user.User;
 import com.spectra.jewel.repository.UserRepository;
 import com.spectra.jewel.service.UserService;
 

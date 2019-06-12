@@ -4,7 +4,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 import com.spectra.jewel.data.ProductData;
-import com.spectra.jewel.model.Product;
+import com.spectra.jewel.model.product.Product;
 
 @Component
 public class ProductDataItemProcessor implements ItemProcessor<ProductData, Product> {

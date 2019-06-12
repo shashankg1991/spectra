@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.spectra.jewel.model.Role;
-import com.spectra.jewel.model.User;
+import com.spectra.jewel.model.user.Role;
+import com.spectra.jewel.model.user.User;
 import com.spectra.jewel.service.UserService;
 
 @Service(value = "userDetailsService")
