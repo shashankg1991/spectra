@@ -1,9 +1,9 @@
 package com.spectra.jewel.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.spectra.jewel.model.Role;
+import com.spectra.jewel.model.user.Role;
 
-public interface RoleRepository extends CrudRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
 }

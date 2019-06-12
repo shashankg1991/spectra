@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spectra.jewel.model.Product;
+import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.repository.ProductRepository;
 import com.spectra.jewel.service.SolrProductService;
 

@@ -6,7 +6,7 @@ import java.util.Collection;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-import com.spectra.jewel.model.Role;
+import com.spectra.jewel.model.user.Role;
 
 public class UserRegistrationForm implements Serializable {
 	private static final long serialVersionUID = 4617181253350256012L;

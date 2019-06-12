@@ -42,6 +42,11 @@
 			<artifactId>commons-text</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!-- Utility dependencies -->
 		<!-- Used so that changes can be deployed on runtime -->
 		<dependency>
