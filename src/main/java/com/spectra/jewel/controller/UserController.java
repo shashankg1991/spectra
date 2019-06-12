@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spectra.jewel.exception.DuplicateException;
 import com.spectra.jewel.forms.UserRegistrationForm;
-import com.spectra.jewel.model.user.Role;
-import com.spectra.jewel.model.user.User;
+import com.spectra.jewel.model.Role;
+import com.spectra.jewel.model.User;
 import com.spectra.jewel.service.RoleService;
 import com.spectra.jewel.service.UserService;
 

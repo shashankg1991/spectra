@@ -1,9 +1,9 @@
 package com.spectra.jewel.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-import com.spectra.jewel.model.product.Product;
+import com.spectra.jewel.model.Product;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends CrudRepository<Product, Long> {
 
 }

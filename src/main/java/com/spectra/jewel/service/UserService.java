@@ -1,7 +1,7 @@
 package com.spectra.jewel.service;
 
 import com.spectra.jewel.exception.DuplicateException;
-import com.spectra.jewel.model.user.User;
+import com.spectra.jewel.model.User;
 
 public interface UserService {
 	public void register(User user) throws DuplicateException;

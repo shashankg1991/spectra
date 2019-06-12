@@ -21,7 +21,7 @@ import org.springframework.core.io.FileSystemResource;
 
 import com.spectra.jewel.batch.FileArchivingTasklet;
 import com.spectra.jewel.data.ProductData;
-import com.spectra.jewel.model.product.Product;
+import com.spectra.jewel.model.Product;
 
 @Configuration
 @EnableBatchProcessing
