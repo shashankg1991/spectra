@@ -19,14 +19,97 @@ import com.spectra.jewel.model.product.Price;
 import com.spectra.jewel.model.user.Address;
 import com.spectra.jewel.model.user.User;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class AbstractOrder extends AbstractEntity {
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Price getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Price totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Price getShippingPrice() {
+		return shippingPrice;
+	}
+
+	public void setShippingPrice(Price shippingPrice) {
+		this.shippingPrice = shippingPrice;
+	}
+
+	public Address getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public Address getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(Address billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Price getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(Price basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
+
+	public ShippingMethod getShippingMethod() {
+		return shippingMethod;
+	}
+
+	public void setShippingMethod(ShippingMethod shippingMethod) {
+		this.shippingMethod = shippingMethod;
+	}
 
 	@SequenceGenerator(name = "codeGenerator")
 	private String code;

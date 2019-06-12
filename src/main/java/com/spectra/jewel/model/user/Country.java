@@ -6,11 +6,6 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "countries")
 public class Country extends AbstractEntity {
@@ -20,5 +15,21 @@ public class Country extends AbstractEntity {
 
 	@Column(name = "countrycode")
 	private String countryCode;
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 
 }

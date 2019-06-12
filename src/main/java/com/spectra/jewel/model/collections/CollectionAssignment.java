@@ -11,14 +11,49 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "collectionassignments")
 public class CollectionAssignment extends AbstractEntity {
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public java.util.Collection<ItemCollection> getCollections() {
+		return collections;
+	}
+
+	public void setCollections(java.util.Collection<ItemCollection> collections) {
+		this.collections = collections;
+	}
+
+	public Collection<CollectionGroup> getCollectionGroups() {
+		return collectionGroups;
+	}
+
+	public void setCollectionGroups(Collection<CollectionGroup> collectionGroups) {
+		this.collectionGroups = collectionGroups;
+	}
 
 	private String code;
 	private String name;

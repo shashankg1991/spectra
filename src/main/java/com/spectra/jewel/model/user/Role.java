@@ -8,14 +8,25 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "roles")
 public class Role extends AbstractEntity {
+
+	public Collection<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Collection<User> users) {
+		this.users = users;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@ManyToMany(mappedBy = "roles")
 	private Collection<User> users;

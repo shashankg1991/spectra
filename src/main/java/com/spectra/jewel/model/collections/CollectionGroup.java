@@ -10,15 +10,34 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 
-import lombok.Getter;
-import lombok.Setter;
 
-
-@Getter
-@Setter
 @Entity
 @Table(name = "collectiongroups")
 public class CollectionGroup extends AbstractEntity {
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Collection<ItemCollection> getCollections() {
+		return collections;
+	}
+
+	public void setCollections(Collection<ItemCollection> collections) {
+		this.collections = collections;
+	}
+
 	private String code;
 	private String name;
 

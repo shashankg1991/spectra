@@ -5,11 +5,6 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "collections")
 public class ItemCollection extends AbstractEntity {

@@ -6,14 +6,25 @@ import javax.persistence.Table;
 import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.enums.Currency;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "prices")
 public class Price extends AbstractEntity {
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
+
+	public Double getPriceValue() {
+		return priceValue;
+	}
+
+	public void setPriceValue(Double priceValue) {
+		this.priceValue = priceValue;
+	}
 
 	private Currency currency;
 

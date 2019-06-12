@@ -1,7 +1,6 @@
 package com.spectra.jewel.config.security;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,7 +17,7 @@ import com.spectra.jewel.service.impl.DefaultUserDetailsService;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-	@Resource
+	@Autowired
 	DefaultUserDetailsService userDetailsService;
 
 	@Override
