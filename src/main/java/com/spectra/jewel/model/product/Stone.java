@@ -1,4 +1,4 @@
-package com.spectra.jewel.model;
+package com.spectra.jewel.model.product;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

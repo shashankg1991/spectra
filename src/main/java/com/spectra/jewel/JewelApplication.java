@@ -9,10 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.spectra.jewel.repository")
-@EnableSolrRepositories(basePackages = "com.spectra.jewel.repository")
-@EntityScan("com.spectra.jewel.model")
-@ComponentScan(basePackages = "com.spectra.jewel")
 @EnableAutoConfiguration
 public class JewelApplication {
 

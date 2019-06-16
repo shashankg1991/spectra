@@ -2,6 +2,7 @@ package com.spectra.jewel.service.impl;
 
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,6 +44,11 @@ public class DefaultUserService implements UserService {
 	@Override
 	public User findByUserName(String username) {
 		return userRepository.findByUsername(username);
+	}
+	
+	@PostConstruct
+	void test() {
+		System.out.println("I am created");
 	}
 
 }

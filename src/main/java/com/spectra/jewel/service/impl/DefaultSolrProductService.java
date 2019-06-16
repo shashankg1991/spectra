@@ -12,7 +12,7 @@ import com.spectra.jewel.converter.SolrResultPageToSearchPageConverter;
 import com.spectra.jewel.data.ProductData;
 import com.spectra.jewel.data.SearchPageData;
 import com.spectra.jewel.model.product.Product;
-import com.spectra.jewel.repository.SolrProductRepository;
+import com.spectra.jewel.repository.solr.SolrProductRepository;
 import com.spectra.jewel.service.SolrProductService;
 import com.spectra.jewel.solr.document.ProductDocument;
 

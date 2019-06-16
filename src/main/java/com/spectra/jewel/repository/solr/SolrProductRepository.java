@@ -1,4 +1,4 @@
-package com.spectra.jewel.repository;
+package com.spectra.jewel.repository.solr;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.SolrResultPage;

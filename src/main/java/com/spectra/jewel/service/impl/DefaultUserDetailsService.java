@@ -17,7 +17,7 @@ import com.spectra.jewel.model.user.Role;
 import com.spectra.jewel.model.user.User;
 import com.spectra.jewel.service.UserService;
 
-@Service(value = "userDetailsService")
+@Service("defautUserDetailsService")
 public class DefaultUserDetailsService implements UserDetailsService {
 
 	@Resource

@@ -1,28 +1,52 @@
 package com.spectra.jewel.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.spectra.jewel.service.impl.DefaultUserDetailsService;
-
 @Configuration
+@EnableJpaRepositories("com.spectra.jewel.repository")
+@EnableSolrRepositories(basePackages = "com.spectra.jewel.repository")
+@EntityScan("com.spectra.jewel.model")
+@ComponentScan(basePackages = "com.spectra.jewel")
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	DefaultUserDetailsService userDetailsService;
+	UserDetailsService defautUserDetailsService;
 
+	@Bean(name = "passwordEncoder")
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+     
+
+	@Bean
+	public AuthenticationProvider getProvider() {
+		System.out.println("I am created here");
+		SpectraAuthProvider provider = new SpectraAuthProvider();
+		 provider.setUserDetailsService(defautUserDetailsService);
+		 provider.setPasswordEncoder(passwordEncoder());
+		return provider;
+	}
+
+	
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+		System.out.println("I am set here");
+		auth.userDetailsService(defautUserDetailsService);
     }
 
 	@Override
@@ -42,18 +66,4 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
 	}
 	
-	@Bean(name = "passwordEncoder")
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-     
-
-	@Bean
-	public AuthenticationProvider getProvider() {
-		SpectraAuthProvider provider = new SpectraAuthProvider();
-		 provider.setUserDetailsService(userDetailsService);
-		 provider.setPasswordEncoder(passwordEncoder());
-		return provider;
-	}
-
 }

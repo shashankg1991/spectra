@@ -20,29 +20,44 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/load")
-public class ProductLoadController {
+public class DataLoadController {
 	@Autowired
 	JobLauncher jobLauncher;
-
 	@Autowired
 	Job productImportJob;
+	@Autowired
+	Job collectionImportJob;
+	@Autowired
+	Job collectionGroupImportJob;
 
-	@GetMapping
-	public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
+	@GetMapping("/collections")
+	public BatchStatus loadCollections() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
 			JobRestartException, JobInstanceAlreadyCompleteException {
+		return runJob(collectionImportJob);
+	}
 
+	@GetMapping("/collectiongroups")
+	public BatchStatus loadCollectionGroups() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
+			JobRestartException, JobInstanceAlreadyCompleteException {
+		return runJob(collectionGroupImportJob);
+	}
+
+	@GetMapping("/products")
+	public BatchStatus loadProducts() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
+			JobRestartException, JobInstanceAlreadyCompleteException {
+		return runJob(productImportJob);
+	}
+
+	private BatchStatus runJob(Job job) throws JobExecutionAlreadyRunningException, JobRestartException,
+			JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		Map<String, JobParameter> maps = new HashMap<>();
 		maps.put("time", new JobParameter(System.currentTimeMillis()));
 		JobParameters parameters = new JobParameters(maps);
-		JobExecution jobExecution = jobLauncher.run(productImportJob, parameters);
-
+		JobExecution jobExecution = jobLauncher.run(job, parameters);
 		System.out.println("JobExecution: " + jobExecution.getStatus());
-
-		System.out.println("Batch is Running...");
 		while (jobExecution.isRunning()) {
 			System.out.println("...");
 		}
-
 		return jobExecution.getStatus();
 	}
 }
