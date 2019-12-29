@@ -36,7 +36,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public AuthenticationProvider getProvider() {
-		System.out.println("I am created here");
 		SpectraAuthProvider provider = new SpectraAuthProvider();
 		 provider.setUserDetailsService(defautUserDetailsService);
 		 provider.setPasswordEncoder(passwordEncoder());
@@ -46,7 +45,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("I am set here");
 		auth.userDetailsService(defautUserDetailsService);
     }
 
