@@ -1,3 +1,4 @@
+
 package com.spectra.jewel.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
 				.defaultSuccessUrl("/");
 		http.authorizeRequests().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
+		
+		//Added for H2 database console to work
+		http.headers().frameOptions().sameOrigin();
 	}
 	
 }
