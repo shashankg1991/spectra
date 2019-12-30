@@ -1,3 +1,16 @@
+Category and Collections Concept:
+	-We need user specific access to our products
+	-For this we have created a Collection Model that will have name of the collection and code. It is like a category of products.
+	-For every user we will attach a Collection Group which will contain a list of collections.
+	-The logged in user will only be able to see the items from the collection group assigned to the user + default collection items that are made public.
+	-We will handle this on the product listing page and product details page.
+	-We need to make assignment of the collection to a user time based for which we will create a collection assignment model which will have an expiration time, collection group or list of collections and a user.
+
+Data Import Using Spring Integration and Spring Batch
+	-Java based configuration used for spring batch
+	-XML based configuration used for spring integration
+	-Spring integration triggers spring batch jobs and moves files to processed directory
+	
 To run the project in Eclipse:
 	-Right click on the JewelApplication.java file.
 	-Run as java application
@@ -5,6 +18,7 @@ To run the project in Eclipse:
 	-Decomplier : https://stackoverflow.com/questions/48396661/eclipse-enhanced-class-decompiler-plugin-does-not-decompile-when-debugging
 	-Package heiraichal structure : https://bugs.eclipse.org/bugs/show_bug.cgi?id=500823
 	-Install lombok : https://stackoverflow.com/questions/35842751/lombok-not-working-with-sts
+	-Install ObjectAis for UMLs : https://www.objectaid.com/install-objectaid
 	
 To run in intellij:
 	-After build.
@@ -22,10 +36,6 @@ Very Important:
 	-Security config is parent of web config in spring. So beans if web config are not found in security config. To resolve this, I added all componet scans in Security config. Other option was to create one more config class and add componnet scan there. Then this calls must be added to WebInitializer : getRootConfigClasses()
 	-https://stackoverflow.com/questions/35344135/custom-userdetailsservice-it-seems-to-be-not-autowired
 	
-Imports:
-	-Works using spring batch
-	-application.properties has values for source file and archive directory.
-	-BatchConfig.java is the entry point
 
 Spring books:
 	-https://github.com/arifhasnatnstucsteonGit/ProgrammingBooks
@@ -57,6 +67,10 @@ Spring SOLR
 Spring Batch
 	-https://www.youtube.com/watch?v=1XEX-u12i0A&t=2138s
 	
+Sprin Integrration
+	-Pro Spring 5 (fifth edition), Chapter 18
+	-Spring Inegration in Action, Chapter 16
+
 Spring Session
 	-https://www.javadevjournal.com/spring/spring-session-with-jdbc/ : Don’t use @EnableJdbcHttpSession and let Spring Boot handle it through auto configuration.
 	-https://www.baeldung.com/spring-session-jdbc
@@ -64,11 +78,4 @@ Spring Session
 	
 	
 
-Category and Collections Concept:
-	-We need user specific access to our products
-	-For this we have created a Collection Model that will have name of the collection and code. It is like a category of products.
-	-For every user we will attach a Collection Group which will contain a list of collections.
-	-The logged in user will only be able to see the items from the collection group assigned to the user + default collection items that are made public.
-	-We will handle this on the product listing page and product details page.
-	-We need to make assignment of the collection to a user time based for which we will create a collection assignment model which will have an expiration time, collection group or list of collections and a user.
 	

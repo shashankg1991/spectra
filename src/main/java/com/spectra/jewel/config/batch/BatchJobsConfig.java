@@ -5,6 +5,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
@@ -19,7 +20,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
-import com.spectra.jewel.batch.FileArchivingTasklet;
 import com.spectra.jewel.data.CollectionGroupData;
 import com.spectra.jewel.data.ItemCollectionData;
 import com.spectra.jewel.data.ProductData;
@@ -30,25 +30,19 @@ import com.spectra.jewel.model.product.Product;
 @Configuration
 @EnableBatchProcessing
 public class BatchJobsConfig {
-
-	@Value("${batch.archive.directory}")
-	private String archiveDirectory;
-
 	/***************** Product Import *******************/
 	@Bean
 	public Job productImportJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
 			ItemReader<ProductData> productItemReader, ItemProcessor<ProductData, Product> productDataItemProcessor,
-			ItemWriter<Product> productDBWriter, @Value("${batch.product.input.file}") String path) {
-		FileArchivingTasklet fileArchivingTasklet = new FileArchivingTasklet(path, archiveDirectory);
+			ItemWriter<Product> productDBWriter) {
 		Step loadStep = stepBuilderFactory.get("products-file-load").<ProductData, Product>chunk(1)
 				.reader(productItemReader).processor(productDataItemProcessor).writer(productDBWriter).build();
-		Step archiveStep = stepBuilderFactory.get("archive-products-file").tasklet(fileArchivingTasklet).build();
-		return jobBuilderFactory.get("Product-Load").incrementer(new RunIdIncrementer()).start(loadStep)
-				.next(archiveStep).build();
+		return jobBuilderFactory.get("Product-Load").incrementer(new RunIdIncrementer()).start(loadStep).build();
 	}
 
 	@Bean
-	public FlatFileItemReader<ProductData> productItemReader(@Value("${batch.product.input.file}") String path) {
+	@StepScope
+	public FlatFileItemReader<ProductData> productItemReader(@Value("#{jobParameters['file.name']}") String path) {
 		FlatFileItemReader<ProductData> flatFileItemReader = new FlatFileItemReader<>();
 		flatFileItemReader.setResource(new FileSystemResource(path));
 		flatFileItemReader.setName("Product-Reader");
@@ -77,18 +71,16 @@ public class BatchJobsConfig {
 	public Job collectionImportJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
 			ItemReader<ItemCollectionData> collectionItemReader,
 			ItemProcessor<ItemCollectionData, ItemCollection> collectionDataItemProcessor,
-			ItemWriter<ItemCollection> collectionDBWriter, @Value("${batch.collection.input.file}") String path) {
-		FileArchivingTasklet fileArchivingTasklet = new FileArchivingTasklet(path, archiveDirectory);
+			ItemWriter<ItemCollection> collectionDBWriter) {
 		Step loadStep = stepBuilderFactory.get("collections-file-load").<ItemCollectionData, ItemCollection>chunk(1)
 				.reader(collectionItemReader).processor(collectionDataItemProcessor).writer(collectionDBWriter).build();
-		Step archiveStep = stepBuilderFactory.get("archive-collection-file").tasklet(fileArchivingTasklet).build();
-		return jobBuilderFactory.get("Collections-Load").incrementer(new RunIdIncrementer()).start(loadStep)
-				.next(archiveStep).build();
+		return jobBuilderFactory.get("Collections-Load").incrementer(new RunIdIncrementer()).start(loadStep).build();
 	}
 
 	@Bean
+	@StepScope
 	public FlatFileItemReader<ItemCollectionData> collectionItemReader(
-			@Value("${batch.collection.input.file}") String path) {
+			@Value("#{jobParameters['file.name']}") String path) {
 		FlatFileItemReader<ItemCollectionData> flatFileItemReader = new FlatFileItemReader<>();
 		flatFileItemReader.setResource(new FileSystemResource(path));
 		flatFileItemReader.setName("Collection-Reader");
@@ -117,20 +109,18 @@ public class BatchJobsConfig {
 	public Job collectionGroupImportJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
 			ItemReader<CollectionGroupData> collectionGroupReader,
 			ItemProcessor<CollectionGroupData, CollectionGroup> collectionGroupDataItemProcessor,
-			ItemWriter<CollectionGroup> collectionGroupDBWriter,
-			@Value("${batch.collectiongroup.input.file}") String path) {
-		FileArchivingTasklet fileArchivingTasklet = new FileArchivingTasklet(path, archiveDirectory);
+			ItemWriter<CollectionGroup> collectionGroupDBWriter) {
 		Step loadStep = stepBuilderFactory.get("collectiongroup-file-load")
 				.<CollectionGroupData, CollectionGroup>chunk(1).reader(collectionGroupReader)
 				.processor(collectionGroupDataItemProcessor).writer(collectionGroupDBWriter).build();
-		Step archiveStep = stepBuilderFactory.get("archive-collectiongroup-file").tasklet(fileArchivingTasklet).build();
 		return jobBuilderFactory.get("CollectionGroup-Load").incrementer(new RunIdIncrementer()).start(loadStep)
-				.next(archiveStep).build();
+				.build();
 	}
 
 	@Bean
+	@StepScope
 	public FlatFileItemReader<CollectionGroupData> collectionGroupItemReader(
-			@Value("${batch.collectiongroup.input.file}") String path) {
+			@Value("#{jobParameters['file.name']}") String path) {
 		FlatFileItemReader<CollectionGroupData> flatFileItemReader = new FlatFileItemReader<>();
 		flatFileItemReader.setResource(new FileSystemResource(path));
 		flatFileItemReader.setName("CollectionGroup-Reader");
