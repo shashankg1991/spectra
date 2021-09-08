@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
 import com.spectra.jewel.model.AbstractEntity;
-import com.spectra.jewel.model.product.Price;
+import com.spectra.jewel.model.Price;
 import com.spectra.jewel.model.product.Product;
 
 @MappedSuperclass

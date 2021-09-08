@@ -17,7 +17,6 @@ public class ProductDocumentToProductDataConverter extends PopulatingConverter<P
 
 	@Override
 	public void populate(ProductDocument source, ProductData target) {
-		target.setId(source.getId());
 		target.setName(source.getName());
 		target.setDescription(source.getDescription());
 		target.setCategories(source.getCategoryNames());

@@ -22,8 +22,8 @@
 	<int:channel id="inboundProduct" />
 	<int:channel id="outboundProduct" />
 	<int-file:inbound-channel-adapter
-		id="inboundProductFileChannelAdapter" directory="${dir.import}/product"
-		filename-pattern="*.csv">
+		id="inboundProductFileChannelAdapter"
+		directory="${dir.import}/product" filename-pattern="*.csv">
 		<int:poller fixed-rate="1000" />
 	</int-file:inbound-channel-adapter>
 	<int-file:outbound-gateway
@@ -40,13 +40,13 @@
 	<batch-int:job-launching-gateway
 		request-channel="outboundProduct" reply-channel="loggingChannel" />
 	<!-- Configuration for product import ends -->
-	
+
 	<!-- Configuration for collection import starts -->
 	<int:channel id="inboundCollection" />
 	<int:channel id="outboundCollection" />
 	<int-file:inbound-channel-adapter
-		id="inboundCollectionFileChannelAdapter" directory="${dir.import}/collection"
-		filename-pattern="*.csv">
+		id="inboundCollectionFileChannelAdapter"
+		directory="${dir.import}/category" filename-pattern="*.csv">
 		<int:poller fixed-rate="1000" />
 	</int-file:inbound-channel-adapter>
 	<int-file:outbound-gateway
@@ -56,35 +56,12 @@
 	<int:transformer input-channel="inboundCollection"
 		output-channel="outboundCollection">
 		<bean class="com.spectra.jewel.integration.MessageToJobLauncher">
-			<constructor-arg ref="collectionImportJob" />
+			<constructor-arg ref="categoryImportJob" />
 			<constructor-arg value="file.name" />
 		</bean>
 	</int:transformer>
 	<batch-int:job-launching-gateway
 		request-channel="outboundCollection" reply-channel="loggingChannel" />
-	<!-- Configuration for collection import ends -->
-	
-	<!-- Configuration for collection group import starts -->
-	<int:channel id="inboundCollectionGroup" />
-	<int:channel id="outboundCollectionGroup" />
-	<int-file:inbound-channel-adapter
-		id="inboundCollectionGroupFileChannelAdapter" directory="${dir.import}/collectiongroup"
-		filename-pattern="*.csv">
-		<int:poller fixed-rate="1000" />
-	</int-file:inbound-channel-adapter>
-	<int-file:outbound-gateway
-		request-channel="inboundCollectionGroupFileChannelAdapter"
-		reply-channel="inboundCollectionGroup" directory="${dir.import}/processed"
-		delete-source-files="true" />
-	<int:transformer input-channel="inboundCollectionGroup"
-		output-channel="outboundCollectionGroup">
-		<bean class="com.spectra.jewel.integration.MessageToJobLauncher">
-			<constructor-arg ref="collectionGroupImportJob" />
-			<constructor-arg value="file.name" />
-		</bean>
-	</int:transformer>
-	<batch-int:job-launching-gateway
-		request-channel="outboundCollectionGroup" reply-channel="loggingChannel" />
 	<!-- Configuration for collection import ends -->
 
 	<int:logging-channel-adapter

@@ -1,5 +1,6 @@
 package com.spectra.jewel.converter;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +11,10 @@ import org.springframework.core.convert.converter.Converter;
 public abstract class PopulatingConverter<S, T> implements Converter<S, T> {
 	abstract public void populate(S source, T target);
 
-	public List<T> convertAll(List<S> sources) {
+	public List<T> convertAll(Collection<S> sources) {
 		if (CollectionUtils.isNotEmpty(sources)) {
-			return sources.stream().map(source -> convert(source)).collect(Collectors.toList());
+			return sources.stream().map(source -> convert(source))
+					.collect(Collectors.toList());
 		} else {
 			return Collections.emptyList();
 		}
