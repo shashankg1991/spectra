@@ -53,8 +53,6 @@ public class DefaultProductPriceService implements ProductPriceService {
 				false);
 		double netWeight = getMetalWeight(product, metalPurity, productSize,
 				true);
-		System.out.print(grossWeight);
-		System.out.print(netWeight);
 		return product.getFixedLabor()
 				+ (product.getVariableLabor() * grossWeight)
 				+ (netWeight * (product.getWastage() / 100) * metalPriceService
@@ -90,12 +88,12 @@ public class DefaultProductPriceService implements ProductPriceService {
 	}
 
 	private double getStonesPrice(Product product) {
+		// For stones values added are not per unit but rather lumpsum
 		if (CollectionUtils.isNotEmpty(product.getStonesEntries())) {
 			return product.getStonesEntries().stream()
 					.filter(entry -> Objects.nonNull(entry.getWeight())
 							&& Objects.nonNull(entry.getRate()))
-					.mapToDouble(entry -> (entry.getWeight()
-							* entry.getRate().getPriceValue()))
+					.mapToDouble(entry -> entry.getRate().getPriceValue())
 					.sum();
 		}
 		return 0d;

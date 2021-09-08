@@ -9,9 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.spectra.jewel.data.ProductData;
-import com.spectra.jewel.data.ProductVariantData;
-import com.spectra.jewel.exception.PriceException;
-import com.spectra.jewel.model.enums.Currency;
 import com.spectra.jewel.model.enums.DiamondGrade;
 import com.spectra.jewel.model.enums.MetalColor;
 import com.spectra.jewel.model.enums.MetalPurity;
@@ -19,10 +16,7 @@ import com.spectra.jewel.model.enums.ProductSize;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.model.product.ProductDiamondGradeDetail;
 import com.spectra.jewel.model.product.ProductMetalSizeEntry;
-import com.spectra.jewel.model.product.StockLevel;
-import com.spectra.jewel.service.ProductPriceService;
 import com.spectra.jewel.service.ProductService;
-import com.spectra.jewel.service.StockLevelService;
 
 @Component("productToProductDataConverter")
 public class ProductToProductDataConverter
@@ -40,12 +34,6 @@ public class ProductToProductDataConverter
 
 	@Resource
 	ProductService productService;
-
-	@Resource
-	ProductPriceService productPriceService;
-
-	@Resource
-	StockLevelService stockLevelService;
 
 	@Override
 	public ProductData convert(Product source) {
@@ -100,49 +88,6 @@ public class ProductToProductDataConverter
 		target.setDefaultDiamondGrade(
 				source.getDefaultDiamondGrade().toString());
 		target.setDefaultProductSize(source.getDefaultProductSize().toString());
-		target.setDefaultProductVariant(getVariantProductData(source,
-				source.getDefaultMetalPurity(), source.getDefaultMetalColor(),
-				source.getDefaultProductSize(),
-				source.getDefaultDiamondGrade()));
-
-	}
-
-	private ProductVariantData getVariantProductData(Product source,
-			MetalPurity metalPurity, MetalColor metalColor,
-			ProductSize productSize, DiamondGrade diamondGrade) {
-
-		// TODO: Use session currency
-		ProductVariantData productVariantData = new ProductVariantData();
-
-		productVariantData.setGrossWeight(productService.getGrossWeight(source,
-				metalPurity, productSize));
-		productVariantData.setDiamondWeight(
-				productService.getDiamondWeight(source, diamondGrade));
-		productVariantData
-				.setStonesWeight(productService.getStonesWeight(source));
-		productVariantData.setDiamondNumber(
-				productService.getDiamondNumber(source, diamondGrade));
-
-		try {
-			productVariantData.setProductPrice(
-					productPriceService.getPrice(source, Currency.INR,
-							metalPurity, diamondGrade, productSize));
-		} catch (PriceException priceException) {
-			// TODO: Log
-		}
-
-		StockLevel stockLevel = stockLevelService.getStockLevel(source,
-				metalPurity, metalColor, diamondGrade, productSize);
-		if (Objects.nonNull(stockLevel)) {
-			productVariantData.setStockLevel(stockLevel.getStatus().name());
-			productVariantData.setExpectedDeliveryTime(
-					stockLevel.getExpectedDeliveryTime());
-		}
-
-		productVariantData
-				.setImages(productService.getImages(source, metalColor));
-
-		return productVariantData;
 	}
 
 }
