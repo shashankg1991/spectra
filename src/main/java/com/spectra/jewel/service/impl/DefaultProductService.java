@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.comparator.Comparators;
+import javax.annotation.Resource;
 
-import com.spectra.jewel.exception.PriceException;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Service;
+
+import com.spectra.jewel.constants.JewelApplicationConstants;
 import com.spectra.jewel.model.enums.DiamondGrade;
 import com.spectra.jewel.model.enums.MetalColor;
 import com.spectra.jewel.model.enums.MetalPurity;
@@ -22,11 +22,15 @@ import com.spectra.jewel.model.product.ProductImage;
 import com.spectra.jewel.model.product.ProductMetalSizeEntry;
 import com.spectra.jewel.repository.ProductRepository;
 import com.spectra.jewel.service.ProductService;
+import com.spectra.jewel.service.UnitConversionService;
 
 @Service("productService")
 public class DefaultProductService implements ProductService {
-	@Autowired
+	@Resource
 	ProductRepository productRepository;
+
+	@Resource
+	UnitConversionService conversionService;
 
 	@Override
 	public Product getProductForCode(String productCode) {
@@ -46,7 +50,8 @@ public class DefaultProductService implements ProductService {
 				.findFirst().orElse(null);
 
 		return Objects.nonNull(metalSizeEntry)
-				? metalSizeEntry.getWeight()
+				? conversionService.convert(metalSizeEntry.getWeight(),
+						JewelApplicationConstants.DEFAULT_METAL_WEIGHT_UNIT)
 				: null;
 	}
 
@@ -65,7 +70,10 @@ public class DefaultProductService implements ProductService {
 				if (Objects.nonNull(diamondGradeDetail)) {
 					return diamondGradeDetail.getEntries().stream()
 							.filter(entry -> Objects.nonNull(entry.getWeight()))
-							.mapToDouble(entry -> entry.getWeight()).sum();
+							.mapToDouble(entry -> conversionService.convert(
+									entry.getWeight(),
+									JewelApplicationConstants.DEFAULT_DIAMOND_WEIGHT_UNIT))
+							.sum();
 				}
 			}
 		}
@@ -99,7 +107,10 @@ public class DefaultProductService implements ProductService {
 		if (CollectionUtils.isNotEmpty(product.getStonesEntries())) {
 			return product.getStonesEntries().stream()
 					.filter(entry -> Objects.nonNull(entry.getWeight()))
-					.mapToDouble(entry -> entry.getWeight()).sum();
+					.mapToDouble(entry -> conversionService.convert(
+							entry.getWeight(),
+							JewelApplicationConstants.DEFAULT_STONE_WEIGHT_UNIT))
+					.sum();
 		}
 		return 0d;
 	}

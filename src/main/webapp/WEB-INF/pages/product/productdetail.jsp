@@ -29,7 +29,10 @@
 					<h1>${product.name}</h1>
 				</div>
 				<div class="col-md-12">
-					<h2>${product.defaultProductVariant.productPrice.totalPrice}</h2>
+					<h2>
+						<span class="total-price">${product.defaultProductVariant.productPrice.currency}
+							${product.defaultProductVariant.productPrice.totalPrice}</span>
+					</h2>
 				</div>
 				<div class="col-md-12">${product.description}</div>
 
@@ -47,7 +50,7 @@
 							<div id="customize-options" class="collapse  mt-3">
 								<div class="col-md-12 row">
 									<span class="col-md-6">Diamond Grade:</span> <select
-										name="diamondGrade" class="col-md-6">
+										name="diamondGrade" id="diamondGradeSelect" class="col-md-6">
 										<c:forEach items="${product.diamondGradeOptions}"
 											var="diamondGradeOption">
 											<option value="${diamondGradeOption.code}"
@@ -84,7 +87,7 @@
 					</div>
 					<div class="col-md-12 row">
 						<span class="col-md-2">Size:</span> <select name="productSize"
-							class="col-md-5 form-group">
+							id="productSizeSelect" class="col-md-5 form-group">
 							<c:forEach items="${product.sizeOptions}" var="sizeOption">
 								<option value="${sizeOption.code}"
 									${product.defaultProductSize eq sizeOption.code ? 'selected' : ''}>${sizeOption.name}</option>
@@ -112,7 +115,7 @@
 						<tbody>
 							<tr>
 								<td>Product Code</td>
-								<td class="text-right">${product.code}</td>
+								<td class="product-code text-right">${product.code}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -123,11 +126,22 @@
 						<tbody>
 							<tr>
 								<td>Total Weight</td>
-								<td class="text-right">${product.defaultProductVariant.diamondWeight }</td>
+								<td class="diamond-weight text-right">${product.defaultProductVariant.diamondWeight }${product.defaultProductVariant.diamondWeightUnit}</td>
 							</tr>
 							<tr>
 								<td>Total No. of Diamonds</td>
-								<td class="text-right">${product.defaultProductVariant.diamondNumber }</td>
+								<td class="diamond-number text-right">${product.defaultProductVariant.diamondNumber }</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section>
+					<h2>Stone Details</h2>
+					<table class="table col-md-12">
+						<tbody>
+							<tr>
+								<td>Total Weight</td>
+								<td class="stone-weight text-right">${product.defaultProductVariant.stoneWeight }${product.defaultProductVariant.stoneWeightUnit}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -142,7 +156,7 @@
 							</tr>
 							<tr>
 								<td>Total Weight</td>
-								<td class="text-right">${product.defaultProductVariant.grossWeight }</td>
+								<td class="metal-weight text-right">${product.defaultProductVariant.grossWeight }${product.defaultProductVariant.metalWeightUnit}</td>
 
 							</tr>
 						</tbody>
@@ -154,27 +168,27 @@
 						<tbody>
 							<tr>
 								<td>Gold</td>
-								<td class="text-right">${product.defaultProductVariant.productPrice.metalPrice }</td>
+								<td class="metal-price text-right">${product.defaultProductVariant.productPrice.currency}${product.defaultProductVariant.productPrice.metalPrice }</td>
 							</tr>
 							<tr>
 								<td>Diamonds</td>
-								<td class="text-right">${product.defaultProductVariant.productPrice.diamondPrice }</td>
+								<td class="diamond-price text-right">${product.defaultProductVariant.productPrice.currency}${product.defaultProductVariant.productPrice.diamondPrice }</td>
 							</tr>
 							<tr>
 								<td>Stones</td>
-								<td class="text-right">${product.defaultProductVariant.productPrice.stonesPrice }</td>
+								<td class="stone-price text-right">${product.defaultProductVariant.productPrice.currency}${product.defaultProductVariant.productPrice.stonesPrice }</td>
 							</tr>
 							<tr>
 								<td>Making Charges</td>
-								<td class="text-right">${product.defaultProductVariant.productPrice.labour }</td>
+								<td class="making-price text-right">${product.defaultProductVariant.productPrice.currency}${product.defaultProductVariant.productPrice.labour }</td>
 							</tr>
 							<tr>
 								<td>Taxes</td>
-								<td class="text-right"></td>
+								<td class="taxes text-right"></td>
 							</tr>
 							<tr>
 								<td>Total</td>
-								<td class="text-right">${product.defaultProductVariant.productPrice.totalPrice }</td>
+								<td class="total-price text-right">${product.defaultProductVariant.productPrice.currency}${product.defaultProductVariant.productPrice.totalPrice }</td>
 							</tr>
 						</tbody>
 					</table>

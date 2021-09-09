@@ -2,6 +2,7 @@ package com.spectra.jewel.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.spectra.jewel.model.enums.Currency;
 import com.spectra.jewel.model.enums.MetalType;
 import com.spectra.jewel.service.MetalPriceService;
 
@@ -9,7 +10,8 @@ import com.spectra.jewel.service.MetalPriceService;
 public class DefaultMetalPriceService implements MetalPriceService {
 
 	@Override
-	public double getMetalUnitPrice(MetalType metalType) {
+	public double getMetalUnitPriceInGram(MetalType metalType,
+			Currency currency) {
 		return 5000;
 	}
 

@@ -1,11 +1,12 @@
 package com.spectra.jewel.data;
 
-public class PriceData {
+public class ProductPriceData {
 	double metalPrice;
 	double stonesPrice;
 	double diamondPrice;
 	double labour;
 	double totalPrice;
+	String currency;
 
 	public double getMetalPrice() {
 		return metalPrice;
@@ -37,5 +38,12 @@ public class PriceData {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	
 
 }

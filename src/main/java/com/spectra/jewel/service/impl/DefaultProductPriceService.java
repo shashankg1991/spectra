@@ -8,7 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import com.spectra.jewel.data.PriceData;
+import com.spectra.jewel.constants.JewelApplicationConstants;
+import com.spectra.jewel.data.ProductPriceData;
 import com.spectra.jewel.exception.PriceException;
 import com.spectra.jewel.model.enums.Currency;
 import com.spectra.jewel.model.enums.DiamondGrade;
@@ -19,6 +20,8 @@ import com.spectra.jewel.model.product.ProductDiamondGradeDetail;
 import com.spectra.jewel.model.product.ProductMetalSizeEntry;
 import com.spectra.jewel.service.MetalPriceService;
 import com.spectra.jewel.service.ProductPriceService;
+import com.spectra.jewel.service.UnitConversionService;
+import com.spectra.jewel.util.RoundingUtil;
 
 @Service("productPriceService")
 public class DefaultProductPriceService implements ProductPriceService {
@@ -26,21 +29,27 @@ public class DefaultProductPriceService implements ProductPriceService {
 	@Resource
 	MetalPriceService metalPriceService;
 
+	@Resource
+	UnitConversionService conversionService;
+
 	@Override
-	public PriceData getPrice(@NonNull Product product,
+	public ProductPriceData getPrice(@NonNull Product product,
 			@NonNull Currency currency, @NonNull MetalPurity metalPurity,
 			DiamondGrade diamondGrade, @NonNull ProductSize productSize)
 			throws PriceException {
 
-		PriceData priceData = new PriceData();
-		priceData.setMetalPrice(
-				getMetalPrice(product, metalPurity, productSize));
-		priceData.setStonesPrice(getStonesPrice(product));
-		priceData.setDiamondPrice(getDiamondPrice(product, diamondGrade));
-		priceData.setLabour(getLabor(product, metalPurity, productSize));
-		priceData.setTotalPrice(
-				priceData.getMetalPrice() + priceData.getDiamondPrice()
-						+ priceData.getStonesPrice() + priceData.getLabour());
+		ProductPriceData priceData = new ProductPriceData();
+		priceData.setMetalPrice(RoundingUtil.round(
+				getMetalPrice(product, metalPurity, productSize, currency)));
+		priceData.setStonesPrice(RoundingUtil.round(getStonesPrice(product)));
+		priceData.setDiamondPrice(
+				RoundingUtil.round(getDiamondPrice(product, diamondGrade)));
+		priceData.setLabour(RoundingUtil
+				.round(getLabor(product, metalPurity, productSize, currency)));
+		priceData.setTotalPrice(RoundingUtil
+				.round(priceData.getMetalPrice() + priceData.getDiamondPrice()
+						+ priceData.getStonesPrice() + priceData.getLabour()));
+		priceData.setCurrency(currency.getSymbol());
 
 		// TODO: Handle currency
 
@@ -48,15 +57,16 @@ public class DefaultProductPriceService implements ProductPriceService {
 	}
 
 	private double getLabor(Product product, MetalPurity metalPurity,
-			ProductSize productSize) throws PriceException {
+			ProductSize productSize, Currency currency) throws PriceException {
 		double grossWeight = getMetalWeight(product, metalPurity, productSize,
 				false);
 		double netWeight = getMetalWeight(product, metalPurity, productSize,
 				true);
 		return product.getFixedLabor()
 				+ (product.getVariableLabor() * grossWeight)
-				+ (netWeight * (product.getWastage() / 100) * metalPriceService
-						.getMetalUnitPrice(product.getMetalType()));
+				+ (netWeight * (product.getWastage() / 100)
+						* metalPriceService.getMetalUnitPriceInGram(
+								product.getMetalType(), currency));
 	}
 
 	private double getDiamondPrice(Product product, DiamondGrade diamondGrade)
@@ -77,8 +87,11 @@ public class DefaultProductPriceService implements ProductPriceService {
 				return diamondGradeDetail.getEntries().stream()
 						.filter(entry -> Objects.nonNull(entry.getRate())
 								&& Objects.nonNull(entry.getWeight()))
-						.mapToDouble(entry -> entry.getWeight()
-								* entry.getRate().getPriceValue())
+						.mapToDouble(entry -> conversionService.convert(
+								entry.getWeight(),
+								JewelApplicationConstants.DEFAULT_DIAMOND_WEIGHT_UNIT)
+								* conversionService.convert(entry.getRate(),
+										JewelApplicationConstants.DEFAULT_DIAMOND_PRICE_UNIT))
 						.sum();
 			}
 			throw new PriceException(
@@ -93,19 +106,23 @@ public class DefaultProductPriceService implements ProductPriceService {
 			return product.getStonesEntries().stream()
 					.filter(entry -> Objects.nonNull(entry.getWeight())
 							&& Objects.nonNull(entry.getRate()))
-					.mapToDouble(entry -> entry.getRate().getPriceValue())
+					.mapToDouble(entry -> conversionService.convert(
+							entry.getWeight(),
+							JewelApplicationConstants.DEFAULT_STONE_WEIGHT_UNIT)
+							* conversionService.convert(entry.getRate(),
+									JewelApplicationConstants.DEFAULT_STONE_PRICE_UNIT))
 					.sum();
 		}
 		return 0d;
 	}
 
 	private double getMetalPrice(Product product, MetalPurity metalPurity,
-			ProductSize productSize) throws PriceException {
+			ProductSize productSize, Currency currency) throws PriceException {
 		if (CollectionUtils.isNotEmpty(product.getMetalSizeEntries())) {
 			double metalWeight = getMetalWeight(product, metalPurity,
 					productSize, true);
 			return (metalWeight * metalPriceService
-					.getMetalUnitPrice(product.getMetalType()));
+					.getMetalUnitPriceInGram(product.getMetalType(), currency));
 		}
 
 		throw new PriceException(
@@ -127,8 +144,10 @@ public class DefaultProductPriceService implements ProductPriceService {
 								+ product.getCode()));
 
 		return isNet
-				? metalSizeEntry.getWeight()
+				? conversionService.convert(metalSizeEntry.getWeight(),
+						JewelApplicationConstants.DEFAULT_METAL_WEIGHT_UNIT)
 						* metalSizeEntry.getPurity().getPercentvalue()
-				: metalSizeEntry.getWeight();
+				: conversionService.convert(metalSizeEntry.getWeight(),
+						JewelApplicationConstants.DEFAULT_METAL_WEIGHT_UNIT);
 	}
 }

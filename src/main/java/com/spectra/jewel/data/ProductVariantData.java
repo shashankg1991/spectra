@@ -7,11 +7,14 @@ public class ProductVariantData {
 	Double grossWeight;
 	Double diamondWeight;
 	Double diamondNumber;
-	Double stonesWeight;
+	Double stoneWeight;
 	String stockLevel;
 	Date expectedDeliveryTime;
-	PriceData productPrice;
+	ProductPriceData productPrice;
 	List<String> images;
+	String diamondWeightUnit;
+	String stoneWeightUnit;
+	String metalWeightUnit;
 
 	public Double getGrossWeight() {
 		return grossWeight;
@@ -31,10 +34,10 @@ public class ProductVariantData {
 	public void setExpectedDeliveryTime(Date expectedDeliveryTime) {
 		this.expectedDeliveryTime = expectedDeliveryTime;
 	}
-	public PriceData getProductPrice() {
+	public ProductPriceData getProductPrice() {
 		return productPrice;
 	}
-	public void setProductPrice(PriceData productPrice) {
+	public void setProductPrice(ProductPriceData productPrice) {
 		this.productPrice = productPrice;
 	}
 	public Double getDiamondWeight() {
@@ -49,17 +52,35 @@ public class ProductVariantData {
 	public void setDiamondNumber(Double diamondNumber) {
 		this.diamondNumber = diamondNumber;
 	}
-	public Double getStonesWeight() {
-		return stonesWeight;
+	public Double getStoneWeight() {
+		return stoneWeight;
 	}
-	public void setStonesWeight(Double stonesWeight) {
-		this.stonesWeight = stonesWeight;
+	public void setStoneWeight(Double stoneWeight) {
+		this.stoneWeight = stoneWeight;
 	}
 	public List<String> getImages() {
 		return images;
 	}
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+	public String getDiamondWeightUnit() {
+		return diamondWeightUnit;
+	}
+	public void setDiamondUnit(String diamondWeightUnit) {
+		this.diamondWeightUnit = diamondWeightUnit;
+	}
+	public String getStoneWeightUnit() {
+		return stoneWeightUnit;
+	}
+	public void setStoneWeightUnit(String stoneWeightUnit) {
+		this.stoneWeightUnit = stoneWeightUnit;
+	}
+	public String getMetalWeightUnit() {
+		return metalWeightUnit;
+	}
+	public void setMetalWeightUnit(String metalWeightUnit) {
+		this.metalWeightUnit = metalWeightUnit;
 	}
 
 }

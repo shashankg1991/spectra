@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.Price;
+import com.spectra.jewel.model.Weight;
 
 /**
  * Represents a a stone other than diamond within a product like ruby, sapphire,
@@ -37,12 +38,15 @@ public class ProductStoneEntry extends AbstractEntity {
 		rate.setProductStoneEntry(this);
 	}
 
-	public double getWeight() {
+	public Weight getWeight() {
 		return weight;
 	}
 
-	public void setWeight(double weight) {
-		this.weight = weight;
+	public void setWeight(Weight weight) {
+		if (weight != null) {
+			this.weight = weight;
+			weight.setProductStoneEntry(this);
+		}
 	}
 
 	public Product getProduct() {
@@ -59,7 +63,9 @@ public class ProductStoneEntry extends AbstractEntity {
 	@JoinColumn(name = "price_id", referencedColumnName = "id")
 	Price rate;
 
-	Double weight;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weight_id", referencedColumnName = "id")
+	Weight weight;
 
 	// Product shall not be deleted on deleting stone entry
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,

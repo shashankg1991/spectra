@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.Price;
+import com.spectra.jewel.model.Weight;
 import com.spectra.jewel.model.enums.DiamondSize;
 
 /**
@@ -29,10 +30,13 @@ public class ProductDiamondEntry extends AbstractEntity {
 	@JoinColumn(name = "price_id", referencedColumnName = "id")
 	Price rate;
 
-	Double weight;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weight_id", referencedColumnName = "id")
+	Weight weight;
 
 	// Grade details shall not be deleted on entry deletion
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
+			CascadeType.MERGE})
 	@JoinColumn(name = "diamond_grade_details_id")
 	ProductDiamondGradeDetail diamondGradeDetails;
 
@@ -57,25 +61,29 @@ public class ProductDiamondEntry extends AbstractEntity {
 	}
 
 	public void setRate(Price rate) {
-		if(rate!=null) {
+		if (rate != null) {
 			this.rate = rate;
 			rate.setProdutDiamondEntry(this);
 		}
 	}
 
-	public double getWeight() {
+	public Weight getWeight() {
 		return weight;
 	}
 
-	public void setWeight(double weight) {
-		this.weight = weight;
+	public void setWeight(Weight weight) {
+		if (weight != null) {
+			this.weight = weight;
+			weight.setProductDiamondEntry(this);
+		}
 	}
 
 	public ProductDiamondGradeDetail getDiamondGradeDetails() {
 		return diamondGradeDetails;
 	}
 
-	public void setDiamondGradeDetails(ProductDiamondGradeDetail diamondGradeDetails) {
+	public void setDiamondGradeDetails(
+			ProductDiamondGradeDetail diamondGradeDetails) {
 		this.diamondGradeDetails = diamondGradeDetails;
 	}
 

@@ -1,13 +1,15 @@
 package com.spectra.jewel.model.product;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
+import com.spectra.jewel.model.Weight;
 import com.spectra.jewel.model.enums.MetalPurity;
-import com.spectra.jewel.model.enums.MetalType;
 import com.spectra.jewel.model.enums.ProductSize;
 
 /**
@@ -44,19 +46,25 @@ public class ProductMetalSizeEntry extends AbstractEntity {
 		this.product = product;
 	}
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
+	public void setWeight(Weight weight) {
+		if (weight != null) {
+			this.weight = weight;
+			weight.setProductMetalSizeEntry(this);
+		}
 	}
 
 	ProductSize size;
 	MetalPurity purity;
-	Double weight;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weight_id", referencedColumnName = "id")
+	Weight weight;
 
 	@ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
+	@JoinColumn(name = "product_id")
 	Product product;
 
-	public Double getWeight() {
+	public Weight getWeight() {
 		return weight;
 	}
 

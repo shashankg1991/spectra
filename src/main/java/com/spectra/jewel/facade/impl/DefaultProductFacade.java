@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.spectra.jewel.constants.JewelApplicationConstants;
 import com.spectra.jewel.converter.ProductToProductDataConverter;
 import com.spectra.jewel.data.ProductData;
 import com.spectra.jewel.data.ProductVariantData;
@@ -71,9 +72,18 @@ public class DefaultProductFacade implements ProductFacade {
 		productVariantData.setDiamondWeight(
 				productService.getDiamondWeight(product, diamondGrade));
 		productVariantData
-				.setStonesWeight(productService.getStonesWeight(product));
+				.setStoneWeight(productService.getStonesWeight(product));
 		productVariantData.setDiamondNumber(
 				productService.getDiamondNumber(product, diamondGrade));
+		productVariantData.setMetalWeightUnit(
+				JewelApplicationConstants.DEFAULT_METAL_WEIGHT_UNIT
+						.getSymbol());
+		productVariantData.setDiamondUnit(
+				JewelApplicationConstants.DEFAULT_DIAMOND_WEIGHT_UNIT
+						.getSymbol());
+		productVariantData.setStoneWeightUnit(
+				JewelApplicationConstants.DEFAULT_STONE_WEIGHT_UNIT
+						.getSymbol());
 
 		try {
 			productVariantData.setProductPrice(

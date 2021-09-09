@@ -2,12 +2,17 @@ package com.spectra.jewel.service.impl;
 
 import java.util.Objects;
 
+import org.springframework.stereotype.Service;
+
 import com.spectra.jewel.model.Price;
 import com.spectra.jewel.model.Weight;
 import com.spectra.jewel.model.enums.PriceUnit;
 import com.spectra.jewel.model.enums.WeightUnit;
+import com.spectra.jewel.service.UnitConversionService;
 
-public class DefaultConversionService {
+@Service("unitConversionService")
+public class DefaultUnitConversionService implements UnitConversionService {
+	@Override
 	public Double convert(Weight weight, WeightUnit targetUnit) {
 		if (Objects.isNull(weight) || Objects.isNull(weight.getWeightValue())) {
 			return null;
@@ -66,6 +71,7 @@ public class DefaultConversionService {
 		}
 	}
 
+	@Override
 	public Double convert(Price price, PriceUnit targetUnit) {
 		if (Objects.isNull(price) || Objects.isNull(price.getPriceValue())) {
 			return null;

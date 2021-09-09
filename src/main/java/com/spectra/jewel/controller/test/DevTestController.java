@@ -14,14 +14,17 @@ import com.spectra.jewel.data.ProductData;
 import com.spectra.jewel.data.ProductVariantData;
 import com.spectra.jewel.facade.ProductFacade;
 import com.spectra.jewel.model.Price;
+import com.spectra.jewel.model.Weight;
 import com.spectra.jewel.model.enums.Currency;
 import com.spectra.jewel.model.enums.DiamondGrade;
 import com.spectra.jewel.model.enums.DiamondSize;
 import com.spectra.jewel.model.enums.MetalColor;
 import com.spectra.jewel.model.enums.MetalPurity;
 import com.spectra.jewel.model.enums.MetalType;
+import com.spectra.jewel.model.enums.PriceUnit;
 import com.spectra.jewel.model.enums.ProductSize;
 import com.spectra.jewel.model.enums.StockLevelStatus;
+import com.spectra.jewel.model.enums.WeightUnit;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.model.product.ProductDiamondEntry;
 import com.spectra.jewel.model.product.ProductDiamondGradeDetail;
@@ -66,24 +69,34 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry1 = new ProductDiamondEntry();
 		productDiamondEntry1.setSize(DiamondSize.FIVE_HALF_TO_SIX);
 		productDiamondEntry1.setNumber(20);
-		productDiamondEntry1.setWeight(0.65);
 		productDiamondGradeDetail1.addDiamondGradeDetail(productDiamondEntry1);
 
 		Price price1 = new Price();
 		price1.setPriceValue(11000.0);
 		price1.setCurrency(Currency.INR);
+		price1.setUnit(PriceUnit.Per_Carat);
 		productDiamondEntry1.setRate(price1);
+
+		Weight weight1 = new Weight();
+		weight1.setWeightValue((0.65));
+		weight1.setUnit(WeightUnit.Carat);
+		productDiamondEntry1.setWeight(weight1);
 
 		ProductDiamondEntry productDiamondEntry2 = new ProductDiamondEntry();
 		productDiamondEntry2.setSize(DiamondSize.FIFTEEN_HALF_TO_SIXTEEN);
 		productDiamondEntry2.setNumber(4);
-		productDiamondEntry2.setWeight(0.12);
 		productDiamondGradeDetail1.addDiamondGradeDetail(productDiamondEntry2);
 
 		Price price2 = new Price();
 		price2.setPriceValue(18000.0);
 		price2.setCurrency(Currency.INR);
+		price2.setUnit(PriceUnit.Per_Carat);
 		productDiamondEntry2.setRate(price2);
+
+		Weight weight2 = new Weight();
+		weight2.setWeightValue((0.12));
+		weight2.setUnit(WeightUnit.Carat);
+		productDiamondEntry2.setWeight(weight2);
 
 		// Diamond detail 2
 		ProductDiamondGradeDetail productDiamondGradeDetail2 = new ProductDiamondGradeDetail();
@@ -95,24 +108,34 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry3 = new ProductDiamondEntry();
 		productDiamondEntry3.setSize(DiamondSize.FIVE_HALF_TO_SIX);
 		productDiamondEntry3.setNumber(20);
-		productDiamondEntry3.setWeight(0.64);
 		productDiamondGradeDetail2.addDiamondGradeDetail(productDiamondEntry3);
 
 		Price price3 = new Price();
 		price3.setPriceValue(14000.0);
 		price3.setCurrency(Currency.INR);
+		price3.setUnit(PriceUnit.Per_Carat);
 		productDiamondEntry3.setRate(price3);
+
+		Weight weight3 = new Weight();
+		weight3.setWeightValue((0.64));
+		weight3.setUnit(WeightUnit.Carat);
+		productDiamondEntry3.setWeight(weight3);
 
 		ProductDiamondEntry productDiamondEntry4 = new ProductDiamondEntry();
 		productDiamondEntry4.setSize(DiamondSize.FIFTEEN_HALF_TO_SIXTEEN);
 		productDiamondEntry4.setNumber(4);
-		productDiamondEntry4.setWeight(0.13);
 		productDiamondGradeDetail2.addDiamondGradeDetail(productDiamondEntry4);
 
 		Price price4 = new Price();
 		price4.setPriceValue(22000.0);
 		price4.setCurrency(Currency.INR);
+		price4.setUnit(PriceUnit.Per_Carat);
 		productDiamondEntry4.setRate(price4);
+
+		Weight weight4 = new Weight();
+		weight4.setWeightValue((0.13));
+		weight4.setUnit(WeightUnit.Carat);
+		productDiamondEntry4.setWeight(weight4);
 
 		/** Images **/
 		// Image 1
@@ -134,65 +157,103 @@ public class DevTestController {
 		/** Stone entries **/
 		// Stone entry 1
 		Price price5 = new Price();
-		price5.setPriceValue(500.0); // This is total value and not per gm or ct
+		price5.setPriceValue(10.0);
+		price5.setUnit(PriceUnit.Per_Carat);
 		price5.setCurrency(Currency.INR);
+
+		Weight weight5 = new Weight();
+		weight5.setWeightValue((50.0));
+		weight5.setUnit(WeightUnit.Carat);
 
 		ProductStoneEntry productStoneEntry1 = new ProductStoneEntry();
 		productStoneEntry1.setRate(price5);
-		productStoneEntry1.setWeight(50); // mg
+		productStoneEntry1.setWeight(weight5); // mg
 		product.addStoneEntry(productStoneEntry1);
 
 		// Stone entry 2
 		Price price6 = new Price();
-		price6.setPriceValue(800.0); // This is total value and not per gm or ct
+		price6.setPriceValue(0.785);
+		price6.setUnit(PriceUnit.Per_Milligram);
 		price6.setCurrency(Currency.INR);
+
+		Weight weight6 = new Weight();
+		weight6.setWeightValue((1020.0));
+		weight6.setUnit(WeightUnit.Milligram);
 
 		ProductStoneEntry productStoneEntry2 = new ProductStoneEntry();
 		productStoneEntry2.setRate(price6);
-		productStoneEntry2.setWeight(1020); // mg
+		productStoneEntry2.setWeight(weight6); // mg
 		product.addStoneEntry(productStoneEntry2);
 
 		/** Gold size entries **/
+		Weight weight7 = new Weight();
+		weight7.setWeightValue((3.26));
+		weight7.setUnit(WeightUnit.Gram);
+
 		ProductMetalSizeEntry productGoldSizeEntry1 = new ProductMetalSizeEntry();
 		productGoldSizeEntry1.setSize(ProductSize.RING_6);
 		productGoldSizeEntry1.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry1.setWeight(3.26);
+		productGoldSizeEntry1.setWeight(weight7);
 		product.addGoldSizeEntry(productGoldSizeEntry1);
+
+		Weight weight8 = new Weight();
+		weight8.setWeightValue((3.44));
+		weight8.setUnit(WeightUnit.Gram);
 
 		ProductMetalSizeEntry productGoldSizeEntry2 = new ProductMetalSizeEntry();
 		productGoldSizeEntry2.setSize(ProductSize.RING_7);
 		productGoldSizeEntry2.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry2.setWeight(3.44);
+		productGoldSizeEntry2.setWeight(weight8);
 		product.addGoldSizeEntry(productGoldSizeEntry2);
+
+		Weight weight9 = new Weight();
+		weight9.setWeightValue((3.48));
+		weight9.setUnit(WeightUnit.Gram);
 
 		ProductMetalSizeEntry productGoldSizeEntry3 = new ProductMetalSizeEntry();
 		productGoldSizeEntry3.setSize(ProductSize.RING_8);
 		productGoldSizeEntry3.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry3.setWeight(3.48);
+		productGoldSizeEntry3.setWeight(weight9);
 		product.addGoldSizeEntry(productGoldSizeEntry3);
+
+		Weight weight10 = new Weight();
+		weight10.setWeightValue((3.50));
+		weight10.setUnit(WeightUnit.Gram);
 
 		ProductMetalSizeEntry productGoldSizeEntry4 = new ProductMetalSizeEntry();
 		productGoldSizeEntry4.setSize(ProductSize.RING_9);
 		productGoldSizeEntry4.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry4.setWeight(3.50);
+		productGoldSizeEntry4.setWeight(weight10);
 		product.addGoldSizeEntry(productGoldSizeEntry4);
+
+		Weight weight11 = new Weight();
+		weight11.setWeightValue((3.59));
+		weight11.setUnit(WeightUnit.Gram);
 
 		ProductMetalSizeEntry productGoldSizeEntry5 = new ProductMetalSizeEntry();
 		productGoldSizeEntry5.setSize(ProductSize.RING_10);
 		productGoldSizeEntry5.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry5.setWeight(3.59);
+		productGoldSizeEntry5.setWeight(weight11);
 		product.addGoldSizeEntry(productGoldSizeEntry5);
+
+		Weight weight12 = new Weight();
+		weight12.setWeightValue((3.67));
+		weight12.setUnit(WeightUnit.Gram);
 
 		ProductMetalSizeEntry productGoldSizeEntry6 = new ProductMetalSizeEntry();
 		productGoldSizeEntry6.setSize(ProductSize.RING_11);
 		productGoldSizeEntry6.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry6.setWeight(3.67);
+		productGoldSizeEntry6.setWeight(weight12);
 		product.addGoldSizeEntry(productGoldSizeEntry6);
+
+		Weight weight13 = new Weight();
+		weight13.setWeightValue((3.75));
+		weight13.setUnit(WeightUnit.Gram);
 
 		ProductMetalSizeEntry productGoldSizeEntry7 = new ProductMetalSizeEntry();
 		productGoldSizeEntry7.setSize(ProductSize.RING_12);
 		productGoldSizeEntry7.setPurity(MetalPurity.FOURTEEN_KARAT);
-		productGoldSizeEntry7.setWeight(3.75);
+		productGoldSizeEntry7.setWeight(weight13);
 		product.addGoldSizeEntry(productGoldSizeEntry7);
 
 		/** Metal types **/
