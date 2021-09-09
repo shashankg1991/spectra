@@ -1705,8 +1705,8 @@ h2 {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-	background: #d8cb98 !important;
-	border-color: #d8cb98 !important;
+	background: #d8cb98;
+	border-color: #d8cb98;
 }
 
 .btn-primary.btn-outline {
@@ -1977,6 +1977,13 @@ footer .social-icons {
 	line-height: inherit;
 	transform: rotate(180deg);
 }
+
+.btn-primary.disabled, .btn-primary:disabled {
+	color: #fff;
+	background-color: #828282;
+	border-color: #828282;
+}
+
 /***************************** Register form CSS *********************/
 .container-register {
 	max-width: 25em;

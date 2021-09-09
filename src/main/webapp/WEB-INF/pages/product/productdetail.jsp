@@ -97,7 +97,7 @@
 					</div>
 					<div class="add-to-cart mt-5 col-md-12 row">
 						<button
-							class="btn btn-primary btn btn-primary offset-md-1 col-md-10">
+							class="btn btn-primary add-to-cart-btn btn-primary offset-md-1 col-md-10">
 							<i class="icon icon-shopping-cart float-left pl-3"></i>Add To
 							Cart
 						</button>

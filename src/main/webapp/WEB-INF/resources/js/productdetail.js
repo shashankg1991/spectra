@@ -9,8 +9,8 @@ function getVariantDeatils() {
 	var productCode = $('.product-code').text();
 	var productSize = $('#productSizeSelect').val();
 	var diamondGrade = $('#diamondGradeSelect').val();
-	var metalPurity = $('input[type=radio][name=metalPurity]').val();
-	var color = $('input[type=radio][name=color]').val();
+	var metalPurity = $('input[type=radio][name=metalPurity]:checked').val();
+	var color = $('input[type=radio][name=color]:checked').val();
 
 	$.getJSON(
 			'/p/' + productCode + '/variant/?metalPurity=' + metalPurity
@@ -36,6 +36,22 @@ function getVariantDeatils() {
 				$('.total-price').text(
 						data.productPrice.currency
 								+ data.productPrice.totalPrice);
+				if( data.images){
+					$(".primary-img").prop("href",data.images[0]);
+					$("div.thumbnails").text('');
+					for(image of data.images){
+						$("div.thumbnails").append('<a class="border mt-2 mr-2 col-md-3" href="' + image + '"><img src="' + image + '" alt="Thumbnail"> </a>');
+					}
+					bindImages();
+				}
+				
+				if(data.stockLevel===null || data.stockLevel==='OUT_OF_STOCK'){
+					$(".add-to-cart-btn")[0].classList.add('disabled');
+				}else{
+					$(".add-to-cart-btn")[0].classList.remove('disabled');
+				}
+
+				
 			}).fail(function(jqxhr, settings, ex) {
 		console.error('Failied to get the variant details');
 	});
