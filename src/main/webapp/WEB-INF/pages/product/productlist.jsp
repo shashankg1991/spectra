@@ -23,15 +23,15 @@
 						<div class="col-md-4">
 							<div class="product-list-item">
 								<div class="image">
-									<a><img
-										src="/resources/images/product-image-placeholder.jpg"></a>
+									<a><img src="${product.image}"></a>
 								</div>
 								<div class="name">
 									<a>${product.name }</a>
 								</div>
-								<div class="price">INR 45000</div>
+								<div class="price">${product.formattedPrice }</div>
 								<div class="add-to-cart">
-									<button class="btn btn-primary"><i class="icon-shopping-cart"></i>Add To Cart</button>
+									<a href="/p/${product.code}"><button
+											class="btn btn-primary">Details</button></a>
 								</div>
 							</div>
 						</div>

@@ -2,6 +2,7 @@ package com.spectra.jewel.model.product;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,9 +60,7 @@ public class Product extends AbstractEntity {
 	private List<StockLevel> stocks;
 
 	// Don't want to delete categories if product is deleted
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
-			CascadeType.MERGE})
-	@ElementCollection(targetClass = Category.class)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "rel_product_category", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
 	private Collection<Category> categories;
 
@@ -103,6 +102,16 @@ public class Product extends AbstractEntity {
 			}
 			metalSizeEntries.add(goldSizeEntry);
 			goldSizeEntry.setProduct(this);
+		}
+	}
+
+	public void addCategory(Category category) {
+		if (category != null) {
+			if (categories == null) {
+				categories = new HashSet<Category>();
+			}
+			categories.add(category);
+			// category.addProduct(this);
 		}
 	}
 

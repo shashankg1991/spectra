@@ -6,6 +6,12 @@
 	<link href="/resources/css/productdetail.css" rel="stylesheet">
 	<script type="text/javascript" src="/resources/js/productdetail.js"></script>
 	<div class="container">
+		<div class="row breadcrumbs mb-5">
+			<c:forEach items="${product.breadcrumbs}" var="breadcrumb">
+				<a href="${breadcrumb.url}">${breadcrumb.name }</a><span
+					class="separator ml-1 mr-1">/</span>
+			</c:forEach>
+		</div>
 		<div class="row">
 			<!-- Product Image -->
 			<div class="col-md-6 row">

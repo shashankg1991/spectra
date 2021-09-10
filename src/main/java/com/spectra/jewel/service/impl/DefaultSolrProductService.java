@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.spectra.jewel.converter.ProductToProductDocumentConverter;
 import com.spectra.jewel.converter.SolrResultPageToSearchPageConverter;
-import com.spectra.jewel.data.ProductData;
 import com.spectra.jewel.data.SearchPageData;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.repository.solr.SolrProductRepository;
@@ -29,21 +28,21 @@ public class DefaultSolrProductService implements SolrProductService {
 	ProductToProductDocumentConverter productToProductDocumentConverter;
 
 	@Override
-	public SearchPageData<ProductData> getAllProducts() {
+	public SearchPageData<ProductDocument> getAllProducts() {
 		SolrResultPage<ProductDocument> result = solrProductRepository.getAllProducts(new PageRequest(0, 10));
 		return solrResultPageToSearchPageConverter.convert(result);
 
 	}
 
 	@Override
-	public SearchPageData<ProductData> getProductsForCategory(String categoryName) {
+	public SearchPageData<ProductDocument> getProductsForCategory(String categoryCode) {
 		SolrResultPage<ProductDocument> result = solrProductRepository
-				.getProductsForCategory("categoryNames:" + categoryName, new PageRequest(0, 10));
+				.getProductsForCategory("categoryCodes:" + categoryCode, new PageRequest(0, 10));
 		return solrResultPageToSearchPageConverter.convert(result);
 	}
 
 	@Override
-	public SearchPageData<ProductData> findBySearchTerm(String searchTerm) {
+	public SearchPageData<ProductDocument> findBySearchTerm(String searchTerm) {
 		SolrResultPage<ProductDocument> result = solrProductRepository.getProductsForSearchTerm(searchTerm,
 				new PageRequest(0, 10));
 		return solrResultPageToSearchPageConverter.convert(result);
@@ -52,5 +51,10 @@ public class DefaultSolrProductService implements SolrProductService {
 	@Override
 	public void addToIndex(Product product) {
 		solrProductRepository.save(productToProductDocumentConverter.convert(product));
+	}
+	
+	
+	public void deleteAll() {
+		solrProductRepository.deleteAll();
 	}
 }

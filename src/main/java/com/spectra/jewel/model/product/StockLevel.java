@@ -11,7 +11,6 @@ import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.enums.DiamondGrade;
 import com.spectra.jewel.model.enums.MetalColor;
 import com.spectra.jewel.model.enums.MetalPurity;
-import com.spectra.jewel.model.enums.MetalType;
 import com.spectra.jewel.model.enums.ProductSize;
 import com.spectra.jewel.model.enums.StockLevelStatus;
 

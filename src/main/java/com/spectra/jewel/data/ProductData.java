@@ -18,6 +18,7 @@ public class ProductData {
 	String defaultDiamondGrade;
 	String defaultProductSize;
 	ProductVariantData defaultProductVariant;
+	List<Breadcrumb> breadcrumbs;
 
 	public String getCode() {
 		return code;
@@ -113,5 +114,13 @@ public class ProductData {
 	public void setDefaultProductVariant(ProductVariantData defaultProductVariant) {
 		this.defaultProductVariant = defaultProductVariant;
 	}
+	public List<Breadcrumb> getBreadcrumbs() {
+		return breadcrumbs;
+	}
+	public void setBreadcrumbs(List<Breadcrumb> breadcrumbs) {
+		this.breadcrumbs = breadcrumbs;
+	}
+	
+	
 	
 }

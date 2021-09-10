@@ -16,6 +16,7 @@ import com.spectra.jewel.model.enums.ProductSize;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.model.product.ProductDiamondGradeDetail;
 import com.spectra.jewel.model.product.ProductMetalSizeEntry;
+import com.spectra.jewel.service.BreadcrumbService;
 import com.spectra.jewel.service.ProductService;
 
 @Component("productToProductDataConverter")
@@ -35,6 +36,9 @@ public class ProductToProductDataConverter
 	@Resource
 	ProductService productService;
 
+	@Resource
+	BreadcrumbService breadcrumbService;
+
 	@Override
 	public ProductData convert(Product source) {
 		ProductData target = new ProductData();
@@ -48,6 +52,9 @@ public class ProductToProductDataConverter
 		target.setName(source.getName());
 		target.setDescription(source.getDescription());
 		target.setManufacturer(source.getManufacturer());
+		target.setBreadcrumbs(
+				breadcrumbService.getBreadcrumbs(source.getCode()));
+
 		if (Objects.nonNull(source.getDiamondGradeDetails())) {
 			Set<DiamondGrade> productDiamondGradeOptions = source
 					.getDiamondGradeDetails().stream()

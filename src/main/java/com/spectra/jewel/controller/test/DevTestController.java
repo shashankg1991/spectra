@@ -2,6 +2,7 @@ package com.spectra.jewel.controller.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import com.spectra.jewel.model.enums.PriceUnit;
 import com.spectra.jewel.model.enums.ProductSize;
 import com.spectra.jewel.model.enums.StockLevelStatus;
 import com.spectra.jewel.model.enums.WeightUnit;
+import com.spectra.jewel.model.product.Category;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.model.product.ProductDiamondEntry;
 import com.spectra.jewel.model.product.ProductDiamondGradeDetail;
@@ -32,6 +34,7 @@ import com.spectra.jewel.model.product.ProductImage;
 import com.spectra.jewel.model.product.ProductMetalSizeEntry;
 import com.spectra.jewel.model.product.ProductStoneEntry;
 import com.spectra.jewel.model.product.StockLevel;
+import com.spectra.jewel.repository.CategoryRepository;
 import com.spectra.jewel.repository.ProductRepository;
 
 @RestController
@@ -42,10 +45,82 @@ public class DevTestController {
 	ProductRepository productRepository;
 
 	@Autowired
+	CategoryRepository categoryRepository;
+
+	@Autowired
 	ProductFacade productFacade;
 
 	@GetMapping("/product/create")
 	public void createProductFull() {
+		/** Categories **/
+		Category category1 = new Category();
+		category1.setCode("C1");
+		category1.setName("Diamond Collection");
+		categoryRepository.save(category1);
+
+		Category category2 = new Category();
+		category2.setCode("C2");
+		category2.setName("Rings");
+		categoryRepository.save(category2);
+		category2.addSuperCategory(category1);
+		categoryRepository.save(category2);
+
+		Category category3 = new Category();
+		category3.setCode("C3");
+		category3.setName("Cocktail");
+		categoryRepository.save(category3);
+		category3.addSuperCategory(category2);
+		categoryRepository.save(category3);
+
+		Category category4 = new Category();
+		category4.setCode("C4");
+		category4.setName("Engagement");
+		categoryRepository.save(category4);
+		category4.addSuperCategory(category2);
+		categoryRepository.save(category4);
+
+		createProduct1(Arrays.asList(category3, category4));
+		createProductRandom("P2",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P3",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P4",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P5",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P6",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P7",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P8",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P9",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P10",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P11",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P12",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P13",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P14",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P15",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P16",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P17",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P18",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		createProductRandom("P19",
+				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
+		createProductRandom("P20",
+				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+	}
+
+	private void createProduct1(List<Category> categories) {
 		Product product = new Product();
 		product.setCode("P1");
 		product.setDescription("Test product 1");
@@ -392,6 +467,109 @@ public class DevTestController {
 		product.setDefaultMetalColor(MetalColor.Yellow);
 		product.setDefaultProductSize(ProductSize.RING_10);
 		product.setDefaultDiamondGrade(DiamondGrade.SI_GH);
+
+		for (Category category : categories) {
+			product.addCategory(category);
+		}
+
+		productRepository.save(product);
+	}
+
+	private void createProductRandom(String code, List<MetalColor> colors,
+			Category category) {
+		Product product = new Product();
+		product.setCode(code);
+		product.setDescription("Test product " + code);
+		product.setManufacturer("Test manufacturer");
+		product.setWastage(10d);
+		product.setFixedLabor(1000d);
+		product.setVariableLabor(100d);
+		product.setName("Test product");
+		product.setNotes("Test notes");
+		product.setDiamondGradeDetails(
+				new ArrayList<ProductDiamondGradeDetail>());
+
+		/** Diamond details **/
+		// Diamond detail 1
+		ProductDiamondGradeDetail productDiamondGradeDetail1 = new ProductDiamondGradeDetail();
+		productDiamondGradeDetail1.setGrade(DiamondGrade.SI_IJ);
+		productDiamondGradeDetail1
+				.setEntries(new ArrayList<ProductDiamondEntry>());
+		product.addDiamondGradeDetail(productDiamondGradeDetail1);
+
+		ProductDiamondEntry productDiamondEntry1 = new ProductDiamondEntry();
+		productDiamondEntry1.setSize(DiamondSize.FIVE_HALF_TO_SIX);
+		productDiamondEntry1.setNumber(20);
+		productDiamondGradeDetail1.addDiamondGradeDetail(productDiamondEntry1);
+
+		Price price1 = new Price();
+		price1.setPriceValue(Math.random() * 20000);
+		price1.setCurrency(Currency.INR);
+		price1.setUnit(PriceUnit.Per_Carat);
+		productDiamondEntry1.setRate(price1);
+
+		Weight weight1 = new Weight();
+		weight1.setWeightValue(Math.random());
+		weight1.setUnit(WeightUnit.Carat);
+		productDiamondEntry1.setWeight(weight1);
+
+		/** Images **/
+		// Image 1
+		ProductImage image1 = new ProductImage();
+		image1.setColor(MetalColor.Yellow);
+		image1.setSequence(1);
+		image1.setUrl(
+				"https://www.peoplesjewellers.com/productimages/processed/V-19907724_0_800.jpg");
+		product.addImage(image1);
+
+		/** Stone entries **/
+		// Stone entry 1
+		Price price5 = new Price();
+		price5.setPriceValue(Math.random() * 1000);
+		price5.setUnit(PriceUnit.Per_Carat);
+		price5.setCurrency(Currency.INR);
+
+		Weight weight5 = new Weight();
+		weight5.setWeightValue((Math.random() * 10));
+		weight5.setUnit(WeightUnit.Carat);
+
+		ProductStoneEntry productStoneEntry1 = new ProductStoneEntry();
+		productStoneEntry1.setRate(price5);
+		productStoneEntry1.setWeight(weight5);
+		product.addStoneEntry(productStoneEntry1);
+
+		/** Gold size entries **/
+		Weight weight7 = new Weight();
+		weight7.setWeightValue(Math.random() * 10);
+		weight7.setUnit(WeightUnit.Gram);
+
+		ProductMetalSizeEntry productGoldSizeEntry1 = new ProductMetalSizeEntry();
+		productGoldSizeEntry1.setSize(ProductSize.RING_6);
+		productGoldSizeEntry1.setPurity(MetalPurity.FOURTEEN_KARAT);
+		productGoldSizeEntry1.setWeight(weight7);
+		product.addGoldSizeEntry(productGoldSizeEntry1);
+
+		/** Metal types **/
+		product.setMetalType(MetalType.Gold);
+		product.setColors(colors);
+
+		/** Stocks **/
+		StockLevel stock1 = new StockLevel();
+		stock1.setColor(MetalColor.Yellow);
+		stock1.setDiamondGrade(DiamondGrade.SI_IJ);
+		stock1.setSize(ProductSize.RING_6);
+		stock1.setPurity(MetalPurity.FOURTEEN_KARAT);
+		stock1.setQuantity(10);
+		stock1.setStatus(StockLevelStatus.IN_STOCK);
+		product.addStock(stock1);
+
+		/** Default variant **/
+		product.setDefaultMetalPurity(MetalPurity.FOURTEEN_KARAT);
+		product.setDefaultMetalColor(MetalColor.Yellow);
+		product.setDefaultProductSize(ProductSize.RING_10);
+		product.setDefaultDiamondGrade(DiamondGrade.SI_GH);
+
+		product.addCategory(category);
 
 		productRepository.save(product);
 	}

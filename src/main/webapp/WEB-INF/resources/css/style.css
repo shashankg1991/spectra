@@ -1984,6 +1984,10 @@ footer .social-icons {
 	border-color: #828282;
 }
 
+.breadcrumbs .separator:last-child {
+	display: none
+}
+
 /***************************** Register form CSS *********************/
 .container-register {
 	max-width: 25em;
