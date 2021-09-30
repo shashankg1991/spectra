@@ -5,9 +5,10 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -16,70 +17,37 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.collections.ItemCollection;
+import com.spectra.jewel.model.enums.ProductStatus;
+import com.spectra.jewel.model.enums.Size;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Table(name = "products")
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Product extends AbstractEntity {
 	private String code;
-	@Column(name = "name", nullable = false)
 	private String name;
-	@Column(name = "description", nullable = true)
 	private String description;
-	private Double grossWeight;
+	// Multiple metal entries added as there can be different types of metal in a
+	// single product
+	List<MetalEntry> metalEntries;
+	List<Size> sizeOptions;
+	// Multiple stone entries added as there can be different types of stone in a
+	// single product
+	List<StoneEntry> stoneEntries;
+	List<Media> images;
+	List<Stock> stocks;
+	@Enumerated(EnumType.STRING)
+	ProductStatus status;
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	private List<Stone> stones = new ArrayList<Stone>();
+	private List<StoneEntry> stones = new ArrayList<StoneEntry>();
 
 	@ManyToMany
 	@ElementCollection(targetClass = ItemCollection.class)
 	@JoinTable(name = "product_collections", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "collection_id", referencedColumnName = "id"))
 	private Collection<ItemCollection> itemCollections;
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public List<Stone> getStones() {
-		return stones;
-	}
-
-	public void setStones(List<Stone> stones) {
-		this.stones = stones;
-	}
-
-	public Collection<ItemCollection> getItemCollections() {
-		return itemCollections;
-	}
-
-	public void setItemCollections(Collection<ItemCollection> itemCollections) {
-		this.itemCollections = itemCollections;
-	}
-
-	public Double getGrossWeight() {
-		return grossWeight;
-	}
-
-	public void setGrossWeight(Double grossWeight) {
-		this.grossWeight = grossWeight;
-	}
 
 }

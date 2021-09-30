@@ -52,13 +52,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.httpBasic();
+		http.authorizeRequests().antMatchers("/").permitAll();
+		http.authorizeRequests().antMatchers("/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/resources/**", "/**/resources/**").permitAll();
 		http.authorizeRequests().antMatchers("/register").permitAll();
 		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.authorizeRequests().antMatchers("/logout").permitAll();
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
-		http.authorizeRequests().antMatchers("/").permitAll();
-		http.authorizeRequests().antMatchers("/**").permitAll();
 		http.authorizeRequests().and().formLogin().loginPage("/login").loginProcessingUrl("/login")
 				.failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
 				.defaultSuccessUrl("/");

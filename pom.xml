@@ -50,6 +50,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<!-- Used so that changes can be deployed on runtime -->
 		<dependency>
 			<groupId>mysql</groupId>

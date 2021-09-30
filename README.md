@@ -6,6 +6,11 @@ Category and Collections Concept:
 	-We will handle this on the product listing page and product details page.
 	-We need to make assignment of the collection to a user time based for which we will create a collection assignment model which will have an expiration time, collection group or list of collections and a user.
 
+Product:
+	-Product can have multiple types of metals and stones/diamonds
+	-We also need to show user the options in which the product can be made available, both in terms of metals and stones/diamonds
+	-User can select gold purity/color and diamond quality on product page
+
 Data Import Using Spring Integration and Spring Batch
 	-Java based configuration used for spring batch
 	-XML based configuration used for spring integration

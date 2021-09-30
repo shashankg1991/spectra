@@ -23,7 +23,6 @@ public class ProductDataItemProcessor implements ItemProcessor<ProductData, Prod
 	public Product process(ProductData productData) throws Exception {
 		Product product = new Product();
 		product.setCode(productData.getCode());
-		product.setGrossWeight(productData.getGrossWeight());
 		product.setName(productData.getName());
 		product.setDescription(productData.getDescription());
 		if (StringUtils.isNotEmpty(productData.getCollectionsString())) {
