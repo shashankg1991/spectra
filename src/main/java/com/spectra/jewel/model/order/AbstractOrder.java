@@ -12,10 +12,10 @@ import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spectra.jewel.model.AbstractEntity;
+import com.spectra.jewel.model.Price;
 import com.spectra.jewel.model.enums.OrderStatus;
 import com.spectra.jewel.model.enums.PaymentMethod;
 import com.spectra.jewel.model.enums.ShippingMethod;
-import com.spectra.jewel.model.product.Price;
 import com.spectra.jewel.model.user.Address;
 import com.spectra.jewel.model.user.User;
 

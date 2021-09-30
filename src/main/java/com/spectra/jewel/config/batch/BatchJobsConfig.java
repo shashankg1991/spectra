@@ -20,11 +20,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
+import com.spectra.jewel.data.CategoryData;
 import com.spectra.jewel.data.CollectionGroupData;
-import com.spectra.jewel.data.ItemCollectionData;
 import com.spectra.jewel.data.ProductData;
-import com.spectra.jewel.model.collections.CollectionGroup;
-import com.spectra.jewel.model.collections.ItemCollection;
+import com.spectra.jewel.model.product.Category;
 import com.spectra.jewel.model.product.Product;
 
 @Configuration
@@ -67,23 +66,22 @@ public class BatchJobsConfig {
 	}
 
 	/***************** Collection Import *******************/
+
 	@Bean
-	public Job collectionImportJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-			ItemReader<ItemCollectionData> collectionItemReader,
-			ItemProcessor<ItemCollectionData, ItemCollection> collectionDataItemProcessor,
-			ItemWriter<ItemCollection> collectionDBWriter) {
-		Step loadStep = stepBuilderFactory.get("collections-file-load").<ItemCollectionData, ItemCollection>chunk(1)
-				.reader(collectionItemReader).processor(collectionDataItemProcessor).writer(collectionDBWriter).build();
-		return jobBuilderFactory.get("Collections-Load").incrementer(new RunIdIncrementer()).start(loadStep).build();
+	public Job categoryImportJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
+			ItemReader<CategoryData> categoryReader, ItemProcessor<CategoryData, Category> categoryDataItemProcessor,
+			ItemWriter<Category> categoryDBWriter) {
+		Step loadStep = stepBuilderFactory.get("category-file-load").<CategoryData, Category>chunk(1)
+				.reader(categoryReader).processor(categoryDataItemProcessor).writer(categoryDBWriter).build();
+		return jobBuilderFactory.get("Categories-Load").incrementer(new RunIdIncrementer()).start(loadStep).build();
 	}
 
 	@Bean
 	@StepScope
-	public FlatFileItemReader<ItemCollectionData> collectionItemReader(
-			@Value("#{jobParameters['file.name']}") String path) {
-		FlatFileItemReader<ItemCollectionData> flatFileItemReader = new FlatFileItemReader<>();
+	public FlatFileItemReader<CategoryData> categoryReader(@Value("#{jobParameters['file.name']}") String path) {
+		FlatFileItemReader<CategoryData> flatFileItemReader = new FlatFileItemReader<>();
 		flatFileItemReader.setResource(new FileSystemResource(path));
-		flatFileItemReader.setName("Collection-Reader");
+		flatFileItemReader.setName("Category-Reader");
 		flatFileItemReader.setLinesToSkip(1);
 		flatFileItemReader.setLineMapper(collectionLineMapper());
 		flatFileItemReader.setStrict(false);
@@ -91,30 +89,17 @@ public class BatchJobsConfig {
 	}
 
 	@Bean
-	public LineMapper<ItemCollectionData> collectionLineMapper() {
-		DefaultLineMapper<ItemCollectionData> defaultLineMapper = new DefaultLineMapper<>();
+	public LineMapper<CategoryData> collectionLineMapper() {
+		DefaultLineMapper<CategoryData> defaultLineMapper = new DefaultLineMapper<>();
 		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
 		lineTokenizer.setDelimiter(",");
 		lineTokenizer.setStrict(false);
 		lineTokenizer.setNames(new String[] { "code", "name" });
-		BeanWrapperFieldSetMapper<ItemCollectionData> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-		fieldSetMapper.setTargetType(ItemCollectionData.class);
+		BeanWrapperFieldSetMapper<CategoryData> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+		fieldSetMapper.setTargetType(CategoryData.class);
 		defaultLineMapper.setLineTokenizer(lineTokenizer);
 		defaultLineMapper.setFieldSetMapper(fieldSetMapper);
 		return defaultLineMapper;
-	}
-
-	/***************** Collection Group Import *******************/
-	@Bean
-	public Job collectionGroupImportJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-			ItemReader<CollectionGroupData> collectionGroupReader,
-			ItemProcessor<CollectionGroupData, CollectionGroup> collectionGroupDataItemProcessor,
-			ItemWriter<CollectionGroup> collectionGroupDBWriter) {
-		Step loadStep = stepBuilderFactory.get("collectiongroup-file-load")
-				.<CollectionGroupData, CollectionGroup>chunk(1).reader(collectionGroupReader)
-				.processor(collectionGroupDataItemProcessor).writer(collectionGroupDBWriter).build();
-		return jobBuilderFactory.get("CollectionGroup-Load").incrementer(new RunIdIncrementer()).start(loadStep)
-				.build();
 	}
 
 	@Bean

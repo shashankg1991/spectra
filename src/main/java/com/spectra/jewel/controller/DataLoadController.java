@@ -26,20 +26,12 @@ public class DataLoadController {
 	@Autowired
 	Job productImportJob;
 	@Autowired
-	Job collectionImportJob;
-	@Autowired
-	Job collectionGroupImportJob;
+	Job categoryImportJob;
 
-	@GetMapping("/collections")
+	@GetMapping("/categories")
 	public BatchStatus loadCollections() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
 			JobRestartException, JobInstanceAlreadyCompleteException {
-		return runJob(collectionImportJob);
-	}
-
-	@GetMapping("/collectiongroups")
-	public BatchStatus loadCollectionGroups() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
-			JobRestartException, JobInstanceAlreadyCompleteException {
-		return runJob(collectionGroupImportJob);
+		return runJob(categoryImportJob);
 	}
 
 	@GetMapping("/products")

@@ -31,6 +31,12 @@ To run in intellij:
 	-Prefer tomcat to run on 9090 port by changing the port in server.xml in tomcat conf directory
 	-Copy the app in webapps and rename the app to ROOT.war for test runs
 	
+To debug
+	-jvm args needs to be added to run configuration: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
+	-Run application as spring boot or java application
+	-Remote debug on port 8080
+	-https://rieckpil.de/howto-remote-debug-spring-boot-applications-intellij-idea-eclipse/	
+	
 To run solr for application:
 	-Extract solr.zip
 	-Run cmd in extracted solr directory

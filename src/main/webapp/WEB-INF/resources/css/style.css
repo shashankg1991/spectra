@@ -76,6 +76,14 @@ h1, h2, h3, h4, h5, h6, figure {
 	margin: 0 0 20px 0;
 }
 
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 18px;
+}
+
 ::-webkit-selection {
 	color: #fff;
 	background: #d1c286;
@@ -1697,8 +1705,8 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-	background: #d8cb98 !important;
-	border-color: #d8cb98 !important;
+	background: #d8cb98;
+	border-color: #d8cb98;
 }
 
 .btn-primary.btn-outline {
@@ -1959,6 +1967,25 @@ footer .newsletter input:focus {
 
 footer .social-icons {
 	margin-top: 3% !important;
+}
+
+.icon {
+	line-height: inherit;
+}
+
+.icon-flip {
+	line-height: inherit;
+	transform: rotate(180deg);
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+	color: #fff;
+	background-color: #828282;
+	border-color: #828282;
+}
+
+.breadcrumbs .separator:last-child {
+	display: none
 }
 
 /***************************** Register form CSS *********************/

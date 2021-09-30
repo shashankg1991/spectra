@@ -1,15 +1,17 @@
 package com.spectra.jewel.service;
 
-import com.spectra.jewel.data.ProductData;
 import com.spectra.jewel.data.SearchPageData;
 import com.spectra.jewel.model.product.Product;
+import com.spectra.jewel.solr.document.ProductDocument;
 
 public interface SolrProductService {
-	SearchPageData<ProductData> getAllProducts();
+	SearchPageData<ProductDocument> getAllProducts();
 
-	SearchPageData<ProductData> getProductsForCategory(String categoryName);
+	SearchPageData<ProductDocument> getProductsForCategory(String categoryCode);
 
-	SearchPageData<ProductData> findBySearchTerm(String searchTerm);
+	SearchPageData<ProductDocument> findBySearchTerm(String searchTerm);
 
 	void addToIndex(Product product);
+
+	void deleteAll();
 }

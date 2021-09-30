@@ -17,7 +17,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.spectra.jewel.model.AbstractEntity;
-import com.spectra.jewel.model.collections.CollectionAssignment;
 import com.spectra.jewel.model.enums.Gender;
 
 @Entity
@@ -112,14 +111,6 @@ public class User extends AbstractEntity {
 		this.roles = roles;
 	}
 
-	public Collection<CollectionAssignment> getCollectionAssignments() {
-		return collectionAssignments;
-	}
-
-	public void setCollectionAssignments(Collection<CollectionAssignment> collectionAssignments) {
-		this.collectionAssignments = collectionAssignments;
-	}
-
 	private String firstName;
 
 	private String lastName;
@@ -150,10 +141,6 @@ public class User extends AbstractEntity {
 	@ElementCollection(targetClass=Role.class)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Collection<Role> roles;
-
-	@ElementCollection(targetClass=CollectionAssignment.class)
-	@JoinTable(name = "user_collectionassignment", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "collectionassignment_id", referencedColumnName = "id"))
-	private Collection<CollectionAssignment> collectionAssignments;
 
 	public User() {
 		super();
