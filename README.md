@@ -36,8 +36,13 @@ To run solr for application:
 	-Extract solr.zip
 	-Run cmd in extracted solr directory
 	-Run bin\solr create -c Product
-	-Run bin\solr start -p 8983 (It is also set in application.properties telling the application to connect on this port for solr)
-	
+	-Run bin\solr start -p 8984 (It is also set in application.properties telling the application to connect on this port for solr)
+
+SOLR issues:
+	-Manually change the fields in the schema.xml to string for facets
+	-Add double quotes for the facet values of type string
+	-Create copy fields for search
+
 Very Important:
 	-Security config is parent of web config in spring. So beans if web config are not found in security config. To resolve this, I added all componet scans in Security config. Other option was to create one more config class and add componnet scan there. Then this calls must be added to WebInitializer : getRootConfigClasses()
 	-https://stackoverflow.com/questions/35344135/custom-userdetailsservice-it-seems-to-be-not-autowired

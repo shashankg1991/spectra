@@ -2,6 +2,7 @@ package com.spectra.jewel.converter;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -38,6 +39,31 @@ public class ProductToProductDocumentConverter
 		target.setCode(source.getCode());
 		target.setName(source.getName());
 		target.setDescription(source.getDescription());
+		setPrice(source, target);
+		setImages(source, target);
+		setCategoryCodes(source, target);
+		setCategoryNames(source, target);
+		if (Objects.nonNull(target.getPriceValue())) {
+			Double price = target.getPriceValue();
+			if (price <= 10000) {
+				target.setPriceRange("INR 0 - 10,000");
+
+			} else if (price <= 20000) {
+				target.setPriceRange("INR 10000 - 20,000");
+
+			} else if (price <= 50000) {
+				target.setPriceRange("INR 2,0000 - 50,000");
+
+			} else if (price <= 100000) {
+				target.setPriceRange("INR 5,0000 - 1,00,000");
+
+			} else {
+				target.setPriceRange("INR 1,00,000 above");
+			}
+		}
+	}
+
+	private void setPrice(Product source, ProductDocument target) {
 		try {
 			ProductPriceData priceData = productPriceService.getPrice(source,
 					Currency.INR, source.getDefaultMetalPurity(),
@@ -49,17 +75,24 @@ public class ProductToProductDocumentConverter
 		} catch (PriceException e) {
 			// TODO: handle exception
 		}
+	}
+
+	private void setImages(Product source, ProductDocument target) {
 		if (CollectionUtils.isNotEmpty(source.getImages())) {
 			target.setImage(source.getImages().get(0).getUrl());
 		}
+	}
 
-		Set<String> categoryCodes = new HashSet<String>();
-		getCategoryCodes(source.getCategories(), categoryCodes);
-		target.setCategoryCodes(categoryCodes);
-
+	private void setCategoryNames(Product source, ProductDocument target) {
 		Set<String> categoryNames = new HashSet<String>();
 		getCategoryNames(source.getCategories(), categoryNames);
 		target.setCategoryNames(categoryNames);
+	}
+
+	private void setCategoryCodes(Product source, ProductDocument target) {
+		Set<String> categoryCodes = new HashSet<String>();
+		getCategoryCodes(source.getCategories(), categoryCodes);
+		target.setCategoryCodes(categoryCodes);
 	}
 	void getCategoryCodes(Collection<Category> categories,
 			Collection<String> categoryCodes) {

@@ -154,7 +154,7 @@ h2 {
 }
 
 .fh5co-nav .menu-2 li input[type=text]:focus {
-	width: 100%;
+	width: 90%;
 	outline: none;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }

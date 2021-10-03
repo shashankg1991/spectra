@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,19 +37,52 @@ public class SolrResultPageToSearchPageConverter
 	public void populate(SolrResultPage<ProductDocument> source,
 			SearchPageData<ProductDocument> target) {
 		target.setResults(source.getContent());
+
+		Map<String, List<String>> currentSelectedFacetValues = getCurrentQueryFilters(
+				target);
+
 		Map<String, List<FacetEntryData>> fieldFacetEntriesMap = new HashMap<>();
 		for (Page<? extends FacetEntry> page : source.getAllFacets()) {
 			for (FacetEntry facetEntry : page.getContent()) {
 				String facetName = ((Field) facetEntry.getKey()).getName();
+				String facetEntryValue = facetEntry.getValue();
 				List<FacetEntryData> entries = fieldFacetEntriesMap
 						.get(facetName);
-				FacetEntryData facetEntryData = new FacetEntryData();
-				facetEntryData
-						.setName(StringUtils.capitalize(facetEntry.getValue()));
-				facetEntryData.setCount(facetEntry.getValueCount());
 				if (CollectionUtils.isEmpty(entries)) {
 					entries = new ArrayList<>();
 				}
+
+				FacetEntryData facetEntryData = new FacetEntryData();
+
+				// Is facet value selected?
+				if (currentSelectedFacetValues.containsKey(facetName)) {
+					List<String> facetSelectedValues = currentSelectedFacetValues
+							.get(facetName);
+					facetEntryData.setSelected(
+							facetSelectedValues.contains(facetEntryValue));
+				}
+
+				// Set selection/un-selection query
+				String currentfilterQuery = StringUtils.isNotEmpty(
+						target.getFilterQuery()) ? target.getFilterQuery() : "";
+
+				String facetEntryQuery = facetName + ":" + facetEntryValue;
+
+				if (!facetEntryData.getSelected()) {
+					facetEntryData.setQuery(currentfilterQuery
+							.concat(StringUtils.isBlank(currentfilterQuery)
+									? facetEntryQuery
+									: " AND " + facetEntryQuery));
+				} else {
+					facetEntryData.setQuery(currentfilterQuery
+							.replaceAll("AND " + facetEntryQuery, "")
+							.replace(facetEntryQuery, "")
+							.replaceAll("  ", " "));
+				}
+
+				facetEntryData.setName(StringUtils.capitalize(facetEntryValue));
+				facetEntryData.setCount(facetEntry.getValueCount());
+
 				entries.add(facetEntryData);
 				fieldFacetEntriesMap.put(facetName, entries);
 			}
@@ -64,6 +98,36 @@ public class SolrResultPageToSearchPageConverter
 			facets.add(facetData);
 		}
 		target.setFacets(facets);
+
+		target.setTotalPages(source.getTotalPages());
+		target.setPageNumber(source.getPageable().getPageNumber());
+		target.setTotalResults((int) source.getTotalElements());
+	}
+
+	private Map<String, List<String>> getCurrentQueryFilters(
+			SearchPageData<ProductDocument> target) {
+		String[] currentQueryfilters = StringUtils
+				.isNotEmpty(target.getFilterQuery())
+						? target.getFilterQuery().split("AND")
+						: null;
+
+		Map<String, List<String>> currentSelectedFacetValues = new HashMap<String, List<String>>();
+		if (Objects.nonNull(currentQueryfilters)
+				&& currentQueryfilters.length > 0) {
+			for (String filter : currentQueryfilters) {
+				String[] filterNameAndValue = filter.trim().split(":");
+				if (currentSelectedFacetValues
+						.containsKey(filterNameAndValue[0])) {
+					currentSelectedFacetValues.get(filterNameAndValue[0])
+							.add(filterNameAndValue[1]);
+				} else {
+					currentSelectedFacetValues.put(filterNameAndValue[0],
+							new ArrayList<String>(
+									List.of(filterNameAndValue[1])));
+				}
+			}
+		}
+		return currentSelectedFacetValues;
 	}
 
 }

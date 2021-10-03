@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableJpaRepositories("com.spectra.jewel.repository")
-@EnableSolrRepositories(basePackages = "com.spectra.jewel.repository")
+@EnableSolrRepositories(basePackages = "com.spectra.jewel.repository", schemaCreationSupport = true)
 @EntityScan("com.spectra.jewel.model")
 @ComponentScan(basePackages = "com.spectra.jewel")
 @EnableWebSecurity
@@ -29,30 +29,31 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	UserDetailsService defautUserDetailsService;
 
 	@Bean(name = "passwordEncoder")
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-     
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
 	public AuthenticationProvider getProvider() {
 		SpectraAuthProvider provider = new SpectraAuthProvider();
-		 provider.setUserDetailsService(defautUserDetailsService);
-		 provider.setPasswordEncoder(passwordEncoder());
+		provider.setUserDetailsService(defautUserDetailsService);
+		provider.setPasswordEncoder(passwordEncoder());
 		return provider;
 	}
 
-	
 	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth)
+			throws Exception {
 		auth.userDetailsService(defautUserDetailsService);
-    }
+	}
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.httpBasic();
-		http.authorizeRequests().antMatchers("/**/resources/**", "/**/resources/**").permitAll();
+		http.authorizeRequests()
+				.antMatchers("/**/resources/**", "/**/resources/**")
+				.permitAll();
 		http.authorizeRequests().antMatchers("/register").permitAll();
 		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.authorizeRequests().antMatchers("/logout").permitAll();
@@ -60,13 +61,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
 		http.authorizeRequests().antMatchers("/").permitAll();
 		http.authorizeRequests().antMatchers("/**").permitAll();
-		http.authorizeRequests().and().formLogin().loginPage("/login").loginProcessingUrl("/login")
-				.failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
+		http.authorizeRequests().and().formLogin().loginPage("/login")
+				.loginProcessingUrl("/login").failureUrl("/login?error")
+				.usernameParameter("username").passwordParameter("password")
 				.defaultSuccessUrl("/");
-		http.authorizeRequests().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout");
-		
-		//Added for H2 database console to work
+		http.authorizeRequests().and().logout().logoutUrl("/logout")
+				.logoutSuccessUrl("/login?logout");
+
+		// Added for H2 database console to work
 		http.headers().frameOptions().sameOrigin();
 	}
-	
+
 }

@@ -36,6 +36,10 @@ public class ProductDocument {
 
 	@Indexed(name = "image")
 	private String image;
+	
+	@Indexed(name = "priceRange")
+	private String priceRange;
+
 
 	public Long getId() {
 		return id;
@@ -107,6 +111,14 @@ public class ProductDocument {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getPriceRange() {
+		return priceRange;
+	}
+
+	public void setPriceRange(String priceRange) {
+		this.priceRange = priceRange;
 	}
 
 }

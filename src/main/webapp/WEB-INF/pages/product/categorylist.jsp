@@ -5,13 +5,19 @@
 <t:page>
 	<div class="container">
 		<div class="row">
+			<h2 class="offset-md-3">${searchPageResult.totalResults} Designs</h2>
+		</div>
+		<div class="row">
 			<div class="offset-md-1 col-md-2">
 				<c:forEach items="${searchPageResult.facets}" var="facet">
 					<div class="facet">
 						<div class="facet-name">${facet.facetName}:</div>
 						<ul class="facet-values">
 							<c:forEach items="${facet.facetEntries}" var="entry">
-								<li>${entry.name }(${entry.count })</li>
+								<li><a href="/c/${categoryCode}?q=${entry.query}"><input
+										type="checkbox" ${entry.selected? 'checked':''}
+										onclick='window.location.assign("/c/${categoryCode}?q=${entry.query}")' />
+										${entry.name }(${entry.count })</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -39,5 +45,17 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${searchPageResult.totalPages gt 1}">
+			<div
+				class="pagination row offset-md-3 col-md-9 d-flex justify-content-center">
+				<c:if test="${previousPageUrl ne null}">
+					<a href="${previousPageUrl}" class="prev col-1 mr-1 ml-1"> << </a>
+				</c:if>
+				<span class="col-1 pt-1 text-center">${searchPageResult.pageNumber + 1}</span>
+				<c:if test="${nextPageUrl ne null }">
+					<a href="${nextPageUrl}" class="next btn col-1 mr-1 ml-1"> >> </a>
+				</c:if>
+			</div>
+		</c:if>
 	</div>
 </t:page>
