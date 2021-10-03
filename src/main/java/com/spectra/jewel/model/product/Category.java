@@ -17,7 +17,7 @@ import com.spectra.jewel.model.AbstractEntity;
  * Categorizes a product. The categories could be nested that helps in
  * navigating the user on the site. Could also be used to restict access to user
  * to particular categories.
- * 
+ *
  * @author Shashank.Gupta
  *
  */

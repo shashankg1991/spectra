@@ -16,8 +16,11 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.domain.Persistable;
 
+import lombok.Data;
+
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Data
 public abstract class AbstractEntity implements Persistable<Long> {
 
 	@Id
