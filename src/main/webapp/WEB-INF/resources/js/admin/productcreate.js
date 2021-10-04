@@ -10,8 +10,8 @@ function bindCreateProductSubmit() {
 			url : '/adminproduct/create',
 			data : JSON.stringify(data),
 			contentType : "application/json; charset=utf-8",
-			success : function() {
-				alert("Created!");
+			success : function(data) {
+				window.location.href = data;
 			},
 		});
 	});

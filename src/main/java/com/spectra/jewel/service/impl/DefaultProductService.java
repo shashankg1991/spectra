@@ -38,6 +38,11 @@ public class DefaultProductService implements ProductService {
 	}
 
 	@Override
+	public Product save(Product product) {
+		return productRepository.save(product);
+	}
+
+	@Override
 	public Double getGrossWeight(Product product, MetalPurity metalPurity,
 			ProductSize productSize) {
 		ProductMetalSizeEntry metalSizeEntry = product.getMetalSizeEntries()

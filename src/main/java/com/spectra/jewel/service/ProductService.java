@@ -11,6 +11,8 @@ import com.spectra.jewel.model.product.Product;
 public interface ProductService {
 	Product getProductForCode(String productCode);
 
+	Product save(Product product);
+
 	Double getGrossWeight(Product product, MetalPurity metalPurity,
 			ProductSize productSize);
 
@@ -21,4 +23,5 @@ public interface ProductService {
 	Double getStonesWeight(Product product);
 
 	List<String> getImages(Product product, MetalColor metalColor);
+
 }
