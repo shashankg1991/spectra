@@ -126,10 +126,21 @@ public class DevTestController {
 		product.setDescription("Test product 1");
 		product.setManufacturer("Test manufacturer");
 		product.setWastage(10d);
-		product.setFixedLabor(1000d);
-		product.setVariableLabor(100d);
 		product.setName("Test product");
 		product.setNotes("Test notes");
+		
+		Price fixedLabor = new Price();
+		fixedLabor.setPriceValue(1000d);
+		fixedLabor.setCurrency(Currency.INR);
+		fixedLabor.setUnit(PriceUnit.Lumpsum);
+		product.setFixedLabor(fixedLabor);
+		
+		Price variableLabor = new Price();
+		variableLabor.setPriceValue(100d);
+		variableLabor.setCurrency(Currency.INR);
+		variableLabor.setUnit(PriceUnit.Per_Gram);
+		product.setVariableLabor(variableLabor);
+		
 		product.setDiamondGradeDetails(
 				new ArrayList<ProductDiamondGradeDetail>());
 
@@ -482,10 +493,21 @@ public class DevTestController {
 		product.setDescription("Test product " + code);
 		product.setManufacturer("Test manufacturer");
 		product.setWastage(10d);
-		product.setFixedLabor(1000d);
-		product.setVariableLabor(100d);
 		product.setName("Test product");
 		product.setNotes("Test notes");
+		
+		Price fixedLabor = new Price();
+		fixedLabor.setPriceValue(1000d);
+		fixedLabor.setCurrency(Currency.INR);
+		fixedLabor.setUnit(PriceUnit.Lumpsum);
+		product.setFixedLabor(fixedLabor);
+		
+		Price variableLabor = new Price();
+		variableLabor.setPriceValue(100d);
+		variableLabor.setCurrency(Currency.INR);
+		variableLabor.setUnit(PriceUnit.Per_Gram);
+		product.setVariableLabor(variableLabor);
+		
 		product.setDiamondGradeDetails(
 				new ArrayList<ProductDiamondGradeDetail>());
 

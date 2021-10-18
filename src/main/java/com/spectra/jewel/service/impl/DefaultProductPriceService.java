@@ -62,8 +62,10 @@ public class DefaultProductPriceService implements ProductPriceService {
 				false);
 		double netWeight = getMetalWeight(product, metalPurity, productSize,
 				true);
-		return product.getFixedLabor()
-				+ (product.getVariableLabor() * grossWeight)
+		return conversionService.convert(product.getFixedLabor(), JewelApplicationConstants.DEFAULT_FIXED_LABOR_PRICE_UNIT) 
+				+ conversionService.convert(product.getVariableLabor(),
+						JewelApplicationConstants.DEFAULT_VARIABLE_LABOR_PRICE_UNIT)
+						* grossWeight
 				+ (netWeight * (product.getWastage() / 100)
 						* metalPriceService.getMetalUnitPriceInGram(
 								product.getMetalType(), currency));

@@ -27,8 +27,8 @@ public class ProductWsDataToProductConverter
 		target.setManufacturer(source.getManufacturer());
 		target.setNotes(source.getNotes());
 		target.setWastage(source.getWastage());
-		target.setFixedLabor(source.getFixedLabor());
-		target.setVariableLabor(source.getVariableLabor());
+		//target.setFixedLabor(source.getFixedLabor());
+		//target.setVariableLabor(source.getVariableLabor());
 		if (StringUtils.isNotEmpty(source.getMetalType())) {
 			target.setMetalType(MetalType.valueOf(source.getMetalType()));
 		}

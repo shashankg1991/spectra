@@ -21,6 +21,23 @@ import com.spectra.jewel.model.Weight;
 @Table(name = "productStoneEntries")
 @Entity
 public class ProductStoneEntry extends AbstractEntity {
+
+	String description;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "price_id", referencedColumnName = "id")
+	Price rate;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weight_id", referencedColumnName = "id")
+	Weight weight;
+
+	// Product shall not be deleted on deleting stone entry
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
+			CascadeType.MERGE})
+	@JoinColumn(name = "product_id")
+	Product product;
+
 	public String getDescription() {
 		return description;
 	}
@@ -56,21 +73,5 @@ public class ProductStoneEntry extends AbstractEntity {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
-	String description;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "price_id", referencedColumnName = "id")
-	Price rate;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "weight_id", referencedColumnName = "id")
-	Weight weight;
-
-	// Product shall not be deleted on deleting stone entry
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
-			CascadeType.MERGE})
-	@JoinColumn(name = "product_id")
-	Product product;
 
 }

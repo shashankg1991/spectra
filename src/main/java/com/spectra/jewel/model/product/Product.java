@@ -14,9 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.spectra.jewel.model.AbstractEntity;
+import com.spectra.jewel.model.Price;
 import com.spectra.jewel.model.enums.DiamondGrade;
 import com.spectra.jewel.model.enums.MetalColor;
 import com.spectra.jewel.model.enums.MetalPurity;
@@ -32,8 +34,15 @@ public class Product extends AbstractEntity {
 	private String manufacturer;
 	private String notes;
 	private Double wastage;
-	private Double fixedLabor;
-	private Double variableLabor;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fixed_labor_price_id", referencedColumnName = "id")
+	private Price fixedLabor;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "variable_labor_price_id", referencedColumnName = "id")
+	private Price variableLabor;
+
 	private MetalType metalType;
 
 	private MetalColor defaultMetalColor;
@@ -173,20 +182,22 @@ public class Product extends AbstractEntity {
 		this.wastage = wastage;
 	}
 
-	public Double getFixedLabor() {
-		return Objects.nonNull(fixedLabor) ? fixedLabor : 0d;
+	public Price getFixedLabor() {
+		return fixedLabor;
 	}
 
-	public void setFixedLabor(Double fixedLabor) {
+	public void setFixedLabor(Price fixedLabor) {
 		this.fixedLabor = fixedLabor;
+		fixedLabor.setFixedLaborProduct(this);
 	}
 
-	public Double getVariableLabor() {
-		return Objects.nonNull(variableLabor) ? variableLabor : 0d;
+	public Price getVariableLabor() {
+		return variableLabor;
 	}
 
-	public void setVariableLabor(Double variableLabor) {
+	public void setVariableLabor(Price variableLabor) {
 		this.variableLabor = variableLabor;
+		variableLabor.setVariableLaborProduct(this);
 	}
 
 	public List<ProductDiamondGradeDetail> getDiamondGradeDetails() {

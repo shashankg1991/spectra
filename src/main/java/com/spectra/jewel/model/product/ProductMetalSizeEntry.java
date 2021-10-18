@@ -22,6 +22,17 @@ import com.spectra.jewel.model.enums.ProductSize;
 @Table(name = "productMetalSizeEntries")
 @Entity
 public class ProductMetalSizeEntry extends AbstractEntity {
+	ProductSize size;
+	MetalPurity purity;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "weight_id", referencedColumnName = "id")
+	Weight weight;
+
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	Product product;
+
 	public ProductSize getSize() {
 		return size;
 	}
@@ -52,17 +63,6 @@ public class ProductMetalSizeEntry extends AbstractEntity {
 			weight.setProductMetalSizeEntry(this);
 		}
 	}
-
-	ProductSize size;
-	MetalPurity purity;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "weight_id", referencedColumnName = "id")
-	Weight weight;
-
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	Product product;
 
 	public Weight getWeight() {
 		return weight;

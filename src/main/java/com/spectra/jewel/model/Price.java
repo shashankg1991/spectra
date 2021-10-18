@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import com.spectra.jewel.model.enums.Currency;
 import com.spectra.jewel.model.enums.PriceUnit;
+import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.model.product.ProductDiamondEntry;
 import com.spectra.jewel.model.product.ProductStoneEntry;
 
@@ -25,6 +26,15 @@ public class Price extends AbstractEntity {
 	@OneToOne(mappedBy = "rate", cascade = {CascadeType.PERSIST,
 			CascadeType.REFRESH, CascadeType.MERGE})
 	private ProductDiamondEntry produtDiamondEntry;
+	
+	@OneToOne(mappedBy = "fixedLabor", cascade = {CascadeType.PERSIST,
+			CascadeType.REFRESH, CascadeType.MERGE})
+	private Product fixedLaborProduct;
+	
+	@OneToOne(mappedBy = "variableLabor", cascade = {CascadeType.PERSIST,
+			CascadeType.REFRESH, CascadeType.MERGE})
+	private Product variableLaborProduct;
+	
 
 	public Price() {
 		super();
@@ -69,6 +79,22 @@ public class Price extends AbstractEntity {
 
 	public void setUnit(PriceUnit unit) {
 		this.unit = unit;
+	}
+
+	public Product getFixedLaborProduct() {
+		return fixedLaborProduct;
+	}
+
+	public void setFixedLaborProduct(Product product) {
+		this.fixedLaborProduct = product;
+	}
+	
+	public Product getVariableLaborProduct() {
+		return variableLaborProduct;
+	}
+
+	public void setVariableLaborProduct(Product variableLaborproduct) {
+		this.variableLaborProduct = variableLaborproduct;
 	}
 
 	public Price(Currency currency, Double priceValue) {
