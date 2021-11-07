@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminHomePageController {
-	
+
 	@GetMapping
 	public String adminHome(HttpServletRequest request, Model model) {
-		return "admin/homepage";
+		return "pages/admin/homepage";
 	}
 
 }

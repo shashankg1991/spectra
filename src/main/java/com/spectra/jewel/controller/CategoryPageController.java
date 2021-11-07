@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.spectra.jewel.data.SearchPageData;
+import com.spectra.jewel.data.SolrSearchPageData;
 import com.spectra.jewel.repository.ProductRepository;
 import com.spectra.jewel.service.SolrProductService;
 import com.spectra.jewel.solr.document.ProductDocument;
@@ -32,7 +32,7 @@ public class CategoryPageController {
 		solrProductService.deleteAll();
 		productRepository.findAll()
 				.forEach(product -> solrProductService.addToIndex(product));
-		SearchPageData<ProductDocument> searchPageResult = StringUtils
+		SolrSearchPageData<ProductDocument> searchPageResult = StringUtils
 				.isEmpty(q)
 						? solrProductService
 								.getProductsForCategory(categoryCode, page)
@@ -49,7 +49,7 @@ public class CategoryPageController {
 		}
 		model.addAttribute("categoryCode", categoryCode);
 
-		return "/product/categorylist";
+		return "pages/product/categorylist";
 	}
 
 }

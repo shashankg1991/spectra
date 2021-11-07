@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.spectra.jewel.data.SearchPageData;
+import com.spectra.jewel.data.SolrSearchPageData;
 import com.spectra.jewel.repository.ProductRepository;
 import com.spectra.jewel.service.SolrProductService;
 import com.spectra.jewel.solr.document.ProductDocument;
@@ -31,7 +31,7 @@ public class SearchPageController {
 		solrProductService.deleteAll();
 		productRepository.findAll()
 				.forEach(product -> solrProductService.addToIndex(product));
-		SearchPageData<ProductDocument> searchPageResult = StringUtils
+		SolrSearchPageData<ProductDocument> searchPageResult = StringUtils
 				.isEmpty(q)
 						? solrProductService.findBySearchTerm(searchTerm, page)
 						: solrProductService.findBySearchTermAndFilters(
@@ -50,7 +50,7 @@ public class SearchPageController {
 		}
 		model.addAttribute("searchTerm", searchTerm);
 
-		return "/product/searchlist";
+		return "pages/product/searchlist";
 	}
 
 }

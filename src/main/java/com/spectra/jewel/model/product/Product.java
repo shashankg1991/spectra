@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.Price;
 import com.spectra.jewel.model.enums.DiamondGrade;
@@ -104,7 +106,7 @@ public class Product extends AbstractEntity {
 		}
 	}
 
-	public void addGoldSizeEntry(ProductMetalSizeEntry goldSizeEntry) {
+	public void addMetalSizeEntry(ProductMetalSizeEntry goldSizeEntry) {
 		if (goldSizeEntry != null) {
 			if (metalSizeEntries == null) {
 				metalSizeEntries = new ArrayList<ProductMetalSizeEntry>();
@@ -120,7 +122,7 @@ public class Product extends AbstractEntity {
 				categories = new HashSet<Category>();
 			}
 			categories.add(category);
-			// category.addProduct(this);
+			//category.addProduct(this);
 		}
 	}
 
@@ -206,7 +208,13 @@ public class Product extends AbstractEntity {
 
 	public void setDiamondGradeDetails(
 			List<ProductDiamondGradeDetail> diamondGradeDetails) {
-		this.diamondGradeDetails = diamondGradeDetails;
+		if (CollectionUtils.isNotEmpty(diamondGradeDetails)) {
+			for (ProductDiamondGradeDetail diamondGradeDetail : diamondGradeDetails) {
+				addDiamondGradeDetail(diamondGradeDetail);
+			}
+		} else {
+			this.diamondGradeDetails = diamondGradeDetails;
+		}
 	}
 
 	public List<ProductImage> getImages() {
@@ -214,7 +222,13 @@ public class Product extends AbstractEntity {
 	}
 
 	public void setImages(List<ProductImage> images) {
-		this.images = images;
+		if (CollectionUtils.isNotEmpty(images)) {
+			for (ProductImage image : images) {
+				addImage(image);
+			}
+		} else {
+			this.images = images;
+		}
 	}
 
 	public List<ProductStoneEntry> getStonesEntries() {
@@ -222,7 +236,13 @@ public class Product extends AbstractEntity {
 	}
 
 	public void setStonesEntries(List<ProductStoneEntry> stonesEntries) {
-		this.stonesEntries = stonesEntries;
+		if (CollectionUtils.isNotEmpty(stonesEntries)) {
+			for (ProductStoneEntry stonesEntry : stonesEntries) {
+				addStoneEntry(stonesEntry);
+			}
+		} else {
+			this.stonesEntries = stonesEntries;
+		}
 	}
 
 	public List<ProductMetalSizeEntry> getMetalSizeEntries() {
@@ -231,7 +251,13 @@ public class Product extends AbstractEntity {
 
 	public void setMetalSizeEntries(
 			List<ProductMetalSizeEntry> metalSizeEntries) {
-		this.metalSizeEntries = metalSizeEntries;
+		if (CollectionUtils.isNotEmpty(metalSizeEntries)) {
+			for (ProductMetalSizeEntry metalSizeEntry : metalSizeEntries) {
+				addMetalSizeEntry(metalSizeEntry);
+			}
+		} else {
+			this.metalSizeEntries = metalSizeEntries;
+		}
 	}
 
 	public List<StockLevel> getStocks() {
@@ -239,7 +265,13 @@ public class Product extends AbstractEntity {
 	}
 
 	public void setStocks(List<StockLevel> stocks) {
-		this.stocks = stocks;
+		if (CollectionUtils.isNotEmpty(stocks)) {
+			for (StockLevel stock : stocks) {
+				addStock(stock);
+			}
+		} else {
+			this.stocks = stocks;
+		}
 	}
 
 	public Collection<Category> getCategories() {
@@ -247,7 +279,13 @@ public class Product extends AbstractEntity {
 	}
 
 	public void setCategories(Collection<Category> categories) {
-		this.categories = categories;
+		if (CollectionUtils.isNotEmpty(categories)) {
+			for (Category category : categories) {
+				addCategory(category);
+			}
+		} else {
+			this.categories = categories;
+		}
 	}
 
 	public List<MetalColor> getColors() {

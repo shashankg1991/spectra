@@ -44,7 +44,7 @@ public class UserController {
 			errorMessge = "You have been successfully logged out !!";
 		}
 		model.addAttribute("errorMessge", errorMessge);
-		return "user/login";
+		return "pages/user/login";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -60,7 +60,7 @@ public class UserController {
 	public String newRegistration(ModelMap model) {
 		UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
 		model.addAttribute("userRegistrationForm", userRegistrationForm);
-		return "user/register";
+		return "pages/user/register";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -68,7 +68,7 @@ public class UserController {
 			BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			System.out.println("There are errors");
-			return "user/register";
+			return "pages/user/register";
 		}
 
 		// TODO: Create converter and populator
@@ -81,9 +81,9 @@ public class UserController {
 			userService.register(user);
 		} catch (DuplicateException de) {
 			model.addAttribute("errorMessge", de.getMessage());
-			return "user/register";
+			return "pages/user/register";
 		}
-		return "homepage";
+		return "pages/homepage";
 	}
 
 	@ModelAttribute("roles")

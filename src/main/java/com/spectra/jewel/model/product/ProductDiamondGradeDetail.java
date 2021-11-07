@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import com.spectra.jewel.model.AbstractEntity;
 import com.spectra.jewel.model.enums.DiamondGrade;
 
@@ -43,10 +45,16 @@ public class ProductDiamondGradeDetail extends AbstractEntity {
 	}
 
 	public void setEntries(List<ProductDiamondEntry> entries) {
-		this.entries = entries;
+		if (CollectionUtils.isNotEmpty(entries)) {
+			for (ProductDiamondEntry entry : entries) {
+				addDiamondEntry(entry);
+			}
+		} else {
+			this.entries = entries;
+		}
 	}
 
-	public void addDiamondGradeDetail(ProductDiamondEntry entry) {
+	public void addDiamondEntry(ProductDiamondEntry entry) {
 		if (entry != null) {
 			if (entries == null) {
 				entries = new ArrayList<ProductDiamondEntry>();

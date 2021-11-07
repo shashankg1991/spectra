@@ -1,8 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="at" tagdir="/WEB-INF/tags/admin"%>
-<at:page>
+<%@taglib prefix="common" tagdir="/WEB-INF/tags/admin/common"%>
+<common:page>
 	<div class="container">
-		<a href="/product/list">Edit Product Details</a>
+
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title">Product</h5>
+				<p class="card-text">Create, edit or delete products.</p>
+				<a href="/adminproduct/find" class="card-link">Current products</a>
+			</div>
+		</div>
+
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title">Test Data</h5>
+				<p class="card-text">Generate test data.</p>
+				<a href="/test/product/create" class="card-link">Generate</a>
+			</div>
+		</div>
+
 	</div>
-</at:page>
+</common:page>

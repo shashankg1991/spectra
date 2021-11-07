@@ -5,15 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.spectra.jewel.data.ProductData;
 import com.spectra.jewel.data.ProductVariantData;
-import com.spectra.jewel.facade.ProductFacade;
+import com.spectra.jewel.facade.product.ProductFacade;
 import com.spectra.jewel.model.Price;
 import com.spectra.jewel.model.Weight;
 import com.spectra.jewel.model.enums.Currency;
@@ -37,7 +37,7 @@ import com.spectra.jewel.model.product.StockLevel;
 import com.spectra.jewel.repository.CategoryRepository;
 import com.spectra.jewel.repository.ProductRepository;
 
-@RestController
+@Controller
 @RequestMapping("/test")
 public class DevTestController {
 
@@ -51,7 +51,7 @@ public class DevTestController {
 	ProductFacade productFacade;
 
 	@GetMapping("/product/create")
-	public void createProductFull() {
+	public String createProductFull() {
 		/** Categories **/
 		Category category1 = new Category();
 		category1.setCode("C1");
@@ -118,6 +118,7 @@ public class DevTestController {
 				Arrays.asList(MetalColor.Yellow, MetalColor.Rose), category4);
 		createProductRandom("P20",
 				Arrays.asList(MetalColor.Yellow, MetalColor.White), category3);
+		return "redirect:/admin";
 	}
 
 	private void createProduct1(List<Category> categories) {
@@ -155,7 +156,7 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry1 = new ProductDiamondEntry();
 		productDiamondEntry1.setSize(DiamondSize.FIVE_HALF_TO_SIX);
 		productDiamondEntry1.setNumber(20);
-		productDiamondGradeDetail1.addDiamondGradeDetail(productDiamondEntry1);
+		productDiamondGradeDetail1.addDiamondEntry(productDiamondEntry1);
 
 		Price price1 = new Price();
 		price1.setPriceValue(11000.0);
@@ -171,7 +172,7 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry2 = new ProductDiamondEntry();
 		productDiamondEntry2.setSize(DiamondSize.FIFTEEN_HALF_TO_SIXTEEN);
 		productDiamondEntry2.setNumber(4);
-		productDiamondGradeDetail1.addDiamondGradeDetail(productDiamondEntry2);
+		productDiamondGradeDetail1.addDiamondEntry(productDiamondEntry2);
 
 		Price price2 = new Price();
 		price2.setPriceValue(18000.0);
@@ -194,7 +195,7 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry3 = new ProductDiamondEntry();
 		productDiamondEntry3.setSize(DiamondSize.FIVE_HALF_TO_SIX);
 		productDiamondEntry3.setNumber(20);
-		productDiamondGradeDetail2.addDiamondGradeDetail(productDiamondEntry3);
+		productDiamondGradeDetail2.addDiamondEntry(productDiamondEntry3);
 
 		Price price3 = new Price();
 		price3.setPriceValue(14000.0);
@@ -210,7 +211,7 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry4 = new ProductDiamondEntry();
 		productDiamondEntry4.setSize(DiamondSize.FIFTEEN_HALF_TO_SIXTEEN);
 		productDiamondEntry4.setNumber(4);
-		productDiamondGradeDetail2.addDiamondGradeDetail(productDiamondEntry4);
+		productDiamondGradeDetail2.addDiamondEntry(productDiamondEntry4);
 
 		Price price4 = new Price();
 		price4.setPriceValue(22000.0);
@@ -252,6 +253,7 @@ public class DevTestController {
 		weight5.setUnit(WeightUnit.Carat);
 
 		ProductStoneEntry productStoneEntry1 = new ProductStoneEntry();
+		productStoneEntry1.setDescription("Test Description");
 		productStoneEntry1.setRate(price5);
 		productStoneEntry1.setWeight(weight5); // mg
 		product.addStoneEntry(productStoneEntry1);
@@ -267,6 +269,7 @@ public class DevTestController {
 		weight6.setUnit(WeightUnit.Milligram);
 
 		ProductStoneEntry productStoneEntry2 = new ProductStoneEntry();
+		productStoneEntry2.setDescription("Test Description");
 		productStoneEntry2.setRate(price6);
 		productStoneEntry2.setWeight(weight6); // mg
 		product.addStoneEntry(productStoneEntry2);
@@ -280,7 +283,7 @@ public class DevTestController {
 		productGoldSizeEntry1.setSize(ProductSize.RING_6);
 		productGoldSizeEntry1.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry1.setWeight(weight7);
-		product.addGoldSizeEntry(productGoldSizeEntry1);
+		product.addMetalSizeEntry(productGoldSizeEntry1);
 
 		Weight weight8 = new Weight();
 		weight8.setWeightValue((3.44));
@@ -290,7 +293,7 @@ public class DevTestController {
 		productGoldSizeEntry2.setSize(ProductSize.RING_7);
 		productGoldSizeEntry2.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry2.setWeight(weight8);
-		product.addGoldSizeEntry(productGoldSizeEntry2);
+		product.addMetalSizeEntry(productGoldSizeEntry2);
 
 		Weight weight9 = new Weight();
 		weight9.setWeightValue((3.48));
@@ -300,7 +303,7 @@ public class DevTestController {
 		productGoldSizeEntry3.setSize(ProductSize.RING_8);
 		productGoldSizeEntry3.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry3.setWeight(weight9);
-		product.addGoldSizeEntry(productGoldSizeEntry3);
+		product.addMetalSizeEntry(productGoldSizeEntry3);
 
 		Weight weight10 = new Weight();
 		weight10.setWeightValue((3.50));
@@ -310,7 +313,7 @@ public class DevTestController {
 		productGoldSizeEntry4.setSize(ProductSize.RING_9);
 		productGoldSizeEntry4.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry4.setWeight(weight10);
-		product.addGoldSizeEntry(productGoldSizeEntry4);
+		product.addMetalSizeEntry(productGoldSizeEntry4);
 
 		Weight weight11 = new Weight();
 		weight11.setWeightValue((3.59));
@@ -320,7 +323,7 @@ public class DevTestController {
 		productGoldSizeEntry5.setSize(ProductSize.RING_10);
 		productGoldSizeEntry5.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry5.setWeight(weight11);
-		product.addGoldSizeEntry(productGoldSizeEntry5);
+		product.addMetalSizeEntry(productGoldSizeEntry5);
 
 		Weight weight12 = new Weight();
 		weight12.setWeightValue((3.67));
@@ -330,7 +333,7 @@ public class DevTestController {
 		productGoldSizeEntry6.setSize(ProductSize.RING_11);
 		productGoldSizeEntry6.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry6.setWeight(weight12);
-		product.addGoldSizeEntry(productGoldSizeEntry6);
+		product.addMetalSizeEntry(productGoldSizeEntry6);
 
 		Weight weight13 = new Weight();
 		weight13.setWeightValue((3.75));
@@ -340,7 +343,7 @@ public class DevTestController {
 		productGoldSizeEntry7.setSize(ProductSize.RING_12);
 		productGoldSizeEntry7.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry7.setWeight(weight13);
-		product.addGoldSizeEntry(productGoldSizeEntry7);
+		product.addMetalSizeEntry(productGoldSizeEntry7);
 
 		/** Metal types **/
 		product.setMetalType(MetalType.Gold);
@@ -522,7 +525,7 @@ public class DevTestController {
 		ProductDiamondEntry productDiamondEntry1 = new ProductDiamondEntry();
 		productDiamondEntry1.setSize(DiamondSize.FIVE_HALF_TO_SIX);
 		productDiamondEntry1.setNumber(20);
-		productDiamondGradeDetail1.addDiamondGradeDetail(productDiamondEntry1);
+		productDiamondGradeDetail1.addDiamondEntry(productDiamondEntry1);
 
 		Price price1 = new Price();
 		price1.setPriceValue(Math.random() * 20000);
@@ -569,7 +572,7 @@ public class DevTestController {
 		productGoldSizeEntry1.setSize(ProductSize.RING_6);
 		productGoldSizeEntry1.setPurity(MetalPurity.FOURTEEN_KARAT);
 		productGoldSizeEntry1.setWeight(weight7);
-		product.addGoldSizeEntry(productGoldSizeEntry1);
+		product.addMetalSizeEntry(productGoldSizeEntry1);
 
 		/** Metal types **/
 		product.setMetalType(MetalType.Gold);

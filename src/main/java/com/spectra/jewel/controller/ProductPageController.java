@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spectra.jewel.data.ProductVariantData;
-import com.spectra.jewel.facade.ProductFacade;
+import com.spectra.jewel.facade.product.ProductFacade;
 
 @Controller
 @RequestMapping("/**/p")
@@ -29,7 +29,7 @@ public class ProductPageController {
 		model.addAttribute("product",
 				productFacade.getProductForCode(productCode));
 
-		return "product/productdetail";
+		return "pages/product/productdetail";
 	}
 
 	@GetMapping(value = "/{productCode:.*}/variant")

@@ -1,7 +1,5 @@
 package com.spectra.jewel.model.product;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +23,6 @@ import com.spectra.jewel.model.enums.StockLevelStatus;
 @Entity
 public class StockLevel extends AbstractEntity {
 	int quantity;
-	Date expectedDeliveryTime;
 	StockLevelStatus status;
 	ProductSize size;
 	DiamondGrade diamondGrade;
@@ -42,14 +39,6 @@ public class StockLevel extends AbstractEntity {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-	}
-
-	public Date getExpectedDeliveryTime() {
-		return expectedDeliveryTime;
-	}
-
-	public void setExpectedDeliveryTime(Date expectedDeliveryTime) {
-		this.expectedDeliveryTime = expectedDeliveryTime;
 	}
 
 	public StockLevelStatus getStatus() {

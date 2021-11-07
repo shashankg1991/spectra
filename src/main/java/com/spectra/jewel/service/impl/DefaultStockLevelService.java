@@ -1,8 +1,11 @@
 package com.spectra.jewel.service.impl;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spectra.jewel.model.enums.DiamondGrade;
@@ -11,10 +14,15 @@ import com.spectra.jewel.model.enums.MetalPurity;
 import com.spectra.jewel.model.enums.ProductSize;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.model.product.StockLevel;
+import com.spectra.jewel.repository.StockLevelRepository;
 import com.spectra.jewel.service.StockLevelService;
 
 @Service("stockLevelService")
 public class DefaultStockLevelService implements StockLevelService {
+
+	@Autowired
+	StockLevelRepository stockLevelRepository;
+
 	@Override
 	public StockLevel getStockLevel(Product product, MetalPurity metalPurity,
 			MetalColor metalColor, DiamondGrade diamondGrade,
@@ -32,5 +40,13 @@ public class DefaultStockLevelService implements StockLevelService {
 					.findAny().orElse(null);
 		}
 		return null;
+	}
+
+	@Override
+	public void delete(List<StockLevel> stocks) {
+		if (CollectionUtils.isNotEmpty(stocks)) {
+			stockLevelRepository.deleteByIdIn(stocks.stream()
+					.map(StockLevel::getId).collect(Collectors.toList()));
+		}
 	}
 }

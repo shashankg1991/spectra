@@ -13,6 +13,6 @@ public class HomePageController {
 
 	@GetMapping
 	public String home(HttpServletRequest request, Model model) {
-		return "homepage";
+		return "pages/homepage";
 	}
 }

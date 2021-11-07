@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public UrlBasedViewResolver viewResolver() {
 		//We set the path for the jsp pages
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-		resolver.setPrefix("/WEB-INF/pages/");
+		resolver.setPrefix("/WEB-INF/");
 		resolver.setSuffix(".jsp");
 		resolver.setViewClass(JstlView.class);
 		return resolver;

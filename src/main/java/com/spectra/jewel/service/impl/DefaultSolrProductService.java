@@ -7,9 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.stereotype.Service;
 
-import com.spectra.jewel.converter.ProductToProductDocumentConverter;
-import com.spectra.jewel.converter.SolrResultPageToSearchPageConverter;
-import com.spectra.jewel.data.SearchPageData;
+import com.spectra.jewel.converter.search.ProductToProductDocumentConverter;
+import com.spectra.jewel.converter.search.SolrResultPageToSearchPageConverter;
+import com.spectra.jewel.data.SolrSearchPageData;
 import com.spectra.jewel.model.product.Product;
 import com.spectra.jewel.repository.solr.SolrProductRepository;
 import com.spectra.jewel.service.SolrProductService;
@@ -31,7 +31,7 @@ public class DefaultSolrProductService implements SolrProductService {
 	ProductToProductDocumentConverter productToProductDocumentConverter;
 
 	@Override
-	public SearchPageData<ProductDocument> getAllProducts() {
+	public SolrSearchPageData<ProductDocument> getAllProducts() {
 		SolrResultPage<ProductDocument> result = solrProductRepository
 				.getAllProducts(new PageRequest(0, DEFAULT_PAGE_SIZE));
 		return solrResultPageToSearchPageConverter.convert(result);
@@ -39,26 +39,26 @@ public class DefaultSolrProductService implements SolrProductService {
 	}
 
 	@Override
-	public SearchPageData<ProductDocument> getProductsForCategory(
+	public SolrSearchPageData<ProductDocument> getProductsForCategory(
 			String categoryCode, int page) {
 		String filterQuery = "categoryCodes:" + categoryCode;
 		return getProductsForFilters(filterQuery, page);
 	}
 
 	@Override
-	public SearchPageData<ProductDocument> getProductsForFilters(
+	public SolrSearchPageData<ProductDocument> getProductsForFilters(
 			String filterQuery, int page) {
 		SolrResultPage<ProductDocument> result = solrProductRepository
 				.getProductsForFilter(prepareFilterQuery(filterQuery),
 						new PageRequest(page, DEFAULT_PAGE_SIZE));
-		SearchPageData<ProductDocument> searchPageData = new SearchPageData<ProductDocument>();
+		SolrSearchPageData<ProductDocument> searchPageData = new SolrSearchPageData<ProductDocument>();
 		searchPageData.setFilterQuery(filterQuery);
 		solrResultPageToSearchPageConverter.populate(result, searchPageData);
 		return searchPageData;
 	}
 
 	@Override
-	public SearchPageData<ProductDocument> findBySearchTerm(String searchTerm,
+	public SolrSearchPageData<ProductDocument> findBySearchTerm(String searchTerm,
 			int page) {
 		SolrResultPage<ProductDocument> result = solrProductRepository
 				.getProductsForSearchTerm(searchTerm,
@@ -67,13 +67,13 @@ public class DefaultSolrProductService implements SolrProductService {
 	}
 
 	@Override
-	public SearchPageData<ProductDocument> findBySearchTermAndFilters(
+	public SolrSearchPageData<ProductDocument> findBySearchTermAndFilters(
 			String searchTerm, String filterQuery, int page) {
 		SolrResultPage<ProductDocument> result = solrProductRepository
 				.getProductsForSearchTermAndFilters(searchTerm,
 						prepareFilterQuery(filterQuery),
 						new PageRequest(page, DEFAULT_PAGE_SIZE));
-		SearchPageData<ProductDocument> searchPageData = new SearchPageData<ProductDocument>();
+		SolrSearchPageData<ProductDocument> searchPageData = new SolrSearchPageData<ProductDocument>();
 		searchPageData.setFilterQuery(filterQuery);
 		solrResultPageToSearchPageConverter.populate(result, searchPageData);
 		return searchPageData;

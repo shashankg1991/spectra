@@ -2,6 +2,8 @@ package com.spectra.jewel.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.spectra.jewel.model.enums.DiamondGrade;
 import com.spectra.jewel.model.enums.MetalColor;
 import com.spectra.jewel.model.enums.MetalPurity;
@@ -16,6 +18,8 @@ public interface ProductService {
 	Double getGrossWeight(Product product, MetalPurity metalPurity,
 			ProductSize productSize);
 
+	Page<Product> findAll(Long id, String code, String text, int page);
+
 	Double getDiamondWeight(Product product, DiamondGrade diamondGrade);
 
 	Double getDiamondNumber(Product product, DiamondGrade diamondGrade);
@@ -23,5 +27,7 @@ public interface ProductService {
 	Double getStonesWeight(Product product);
 
 	List<String> getImages(Product product, MetalColor metalColor);
+
+	void delete(Product product);
 
 }

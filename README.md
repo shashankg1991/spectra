@@ -92,6 +92,8 @@ Spring Session
 	-https://www.baeldung.com/spring-session-jdbc
 	-https://dzone.com/articles/spring-jdbc-session
 	
+Data Validation on UI
+	-https://parsleyjs.org/	
 	
 
 	
